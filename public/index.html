@@ -457,6 +457,87 @@
     }
 
     /* ── Colors ── */
+    /* ── Info button & tooltip ── */
+    .info-wrap {
+      position: relative;
+      display: inline-flex;
+      margin-left: auto;
+    }
+    .btn-info {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      color: var(--text-tertiary);
+      font-size: 0.7rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+    }
+    .btn-info:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.18);
+      color: var(--text-secondary);
+      box-shadow: 0 0 10px rgba(255,255,255,0.04);
+    }
+    .btn-info:active { transform: scale(0.9); }
+    .info-tooltip {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      width: 280px;
+      padding: 0.85rem 1rem;
+      background: rgba(15,20,28,0.85);
+      -webkit-backdrop-filter: blur(24px) saturate(1.6);
+      backdrop-filter: blur(24px) saturate(1.6);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06);
+      z-index: 100;
+      font-size: 0.75rem;
+      line-height: 1.55;
+      color: var(--text-secondary);
+      animation: fade-up 0.2s cubic-bezier(0.16,1,0.3,1);
+    }
+    .info-tooltip.visible { display: block; }
+    .info-tooltip h4 {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.5rem;
+    }
+    .info-tooltip dl {
+      margin: 0;
+    }
+    .info-tooltip dt {
+      font-weight: 600;
+      color: var(--accent-blue);
+      margin-top: 0.4rem;
+    }
+    .info-tooltip dt:first-child { margin-top: 0; }
+    .info-tooltip dd {
+      margin: 0.1rem 0 0 0;
+      color: var(--text-tertiary);
+    }
+    .info-tooltip .info-divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      margin: 0.5rem 0;
+    }
+    .info-tooltip p {
+      margin: 0;
+      color: var(--text-tertiary);
+    }
+
     .color-section { position: relative; margin-top: 0.75rem; }
     .color-row {
       display: flex;
@@ -780,6 +861,20 @@
               <label><input type="radio" name="bg" value="dark" /><span>Dark</span></label>
             </div>
           </div>
+          <div class="info-wrap">
+            <button class="btn-info" onclick="toggleInfo()" title="How to use">?</button>
+            <div class="info-tooltip" id="info-tooltip">
+              <h4>How to use</h4>
+              <dl>
+                <dt>Sum</dt>
+                <dd>Adds contribution counts from all users into one heatmap with a single color scale.</dd>
+                <dt>Overlay</dt>
+                <dd>Shows each user as a separate color layer so you can see individual contributions side by side.</dd>
+              </dl>
+              <hr class="info-divider">
+              <p>Enter 2+ GitHub usernames, pick a color, then copy the generated URL or embed snippet into your README.</p>
+            </div>
+          </div>
         </div>
         <div class="color-section" id="color-pickers"></div>
       </div>
@@ -1017,6 +1112,17 @@
       };
       container.appendChild(img);
     }
+
+    function toggleInfo() {
+      const tip = document.getElementById('info-tooltip');
+      tip.classList.toggle('visible');
+    }
+    document.addEventListener('click', (e) => {
+      const wrap = document.querySelector('.info-wrap');
+      if (wrap && !wrap.contains(e.target)) {
+        document.getElementById('info-tooltip').classList.remove('visible');
+      }
+    });
 
     function onInputChange() { updateColorPickers(); updateUrl(); }
 
