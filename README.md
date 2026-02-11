@@ -108,6 +108,22 @@ Visit **[github-contribution-merger.vercel.app](https://github-contribution-merg
 
 </td>
 </tr>
+<tr>
+<td align="center"><strong>Custom Overlay (Red + Teal)</strong></td>
+<td align="center"><strong>Custom Overlay (Orange + Blue)</strong></td>
+</tr>
+<tr>
+<td align="center">
+
+![Custom Overlay Red Teal](https://github-contribution-merger.vercel.app/api/merge?users=gvanrossum,apoorvdarshan&mode=overlay&colors=ff6b6b,4ecdc4)
+
+</td>
+<td align="center">
+
+![Custom Overlay Orange Blue](https://github-contribution-merger.vercel.app/api/merge?users=gvanrossum,apoorvdarshan&mode=overlay&colors=f0883e,58a6ff)
+
+</td>
+</tr>
 </table>
 
 ---
