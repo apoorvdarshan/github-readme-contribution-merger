@@ -6,142 +6,369 @@
   <title>GitHub Contribution Merger</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; background: #0d1117; color: #c9d1d9; min-height: 100vh; padding: 2rem; display: flex; justify-content: center; }
-    .container { max-width: 760px; width: 100%; }
-    h1 { font-size: 2rem; margin-bottom: 0.5rem; color: #f0f6fc; }
-    .subtitle { color: #8b949e; margin-bottom: 2rem; line-height: 1.6; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: #0d1117;
+      color: #c9d1d9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
     a { color: #58a6ff; text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    /* Sections */
-    .section { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; }
-    .section-title { font-size: 0.85rem; font-weight: 600; color: #8b949e; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
+    /* ── Header ── */
+    .header {
+      text-align: center;
+      padding: 3rem 1.5rem 2rem;
+    }
+    .header h1 {
+      font-size: 1.8rem;
+      color: #f0f6fc;
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.02em;
+    }
+    .header p {
+      color: #8b949e;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
 
-    /* User inputs */
-    .user-row { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center; }
-    .user-row input[type="text"] { flex: 1; background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; border-radius: 6px; padding: 0.5rem 0.75rem; font-size: 0.9rem; outline: none; }
+    /* ── Main ── */
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 1.5rem 2rem;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+    .card-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #8b949e;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.6rem;
+    }
+
+    /* ── User rows ── */
+    .user-row {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.4rem;
+      align-items: center;
+    }
+    .user-row input[type="text"] {
+      flex: 1;
+      background: #0d1117;
+      border: 1px solid #30363d;
+      color: #c9d1d9;
+      border-radius: 6px;
+      padding: 0.45rem 0.7rem;
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color 0.15s;
+    }
     .user-row input[type="text"]:focus { border-color: #58a6ff; }
     .user-row input[type="text"]::placeholder { color: #484f58; }
-    .btn-remove { background: none; border: 1px solid #30363d; color: #f85149; border-radius: 6px; width: 32px; height: 32px; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; }
-    .btn-remove:hover { background: #da36331a; border-color: #f85149; }
-    .btn-add { background: none; border: 1px solid #30363d; color: #58a6ff; border-radius: 6px; padding: 0.4rem 0.75rem; cursor: pointer; font-size: 0.85rem; }
-    .btn-add:hover { background: #388bfd1a; border-color: #58a6ff; }
+    .btn-icon {
+      background: none;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+    .btn-icon.remove { color: #f85149; }
+    .btn-icon.remove:hover { background: #da36331a; border-color: #f85149; }
+    .btn-add {
+      background: none;
+      border: 1px dashed #30363d;
+      color: #58a6ff;
+      border-radius: 6px;
+      padding: 0.35rem 0.7rem;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: all 0.15s;
+    }
+    .btn-add:hover { background: #388bfd0d; border-color: #58a6ff; }
 
-    /* Radio / checkbox groups */
-    .option-group { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
-    .option-group label { display: flex; align-items: center; gap: 0.35rem; cursor: pointer; font-size: 0.9rem; }
-    .option-group input[type="radio"], .option-group input[type="checkbox"] { accent-color: #58a6ff; }
+    /* ── Options row ── */
+    .options-row {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .opt-group {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .opt-label {
+      font-size: 0.8rem;
+      color: #8b949e;
+    }
+    .pill-group {
+      display: flex;
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .pill-group label {
+      padding: 0.3rem 0.65rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      color: #8b949e;
+      user-select: none;
+    }
+    .pill-group label:hover { color: #c9d1d9; }
+    .pill-group input { display: none; }
+    .pill-group input:checked + span {
+      color: #f0f6fc;
+      background: #30363d;
+    }
+    .pill-group label span {
+      display: block;
+      padding: 0.3rem 0.65rem;
+      margin: -0.3rem -0.65rem;
+      border-radius: 5px;
+    }
 
-    /* Select */
-    select { background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; border-radius: 6px; padding: 0.5rem 0.75rem; font-size: 0.9rem; outline: none; cursor: pointer; }
-    select:focus { border-color: #58a6ff; }
-
-    /* Color pickers */
-    .color-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
-    .color-row .color-label { font-size: 0.85rem; color: #8b949e; min-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .color-row input[type="color"] { width: 0; height: 0; padding: 0; border: 0; position: absolute; opacity: 0; pointer-events: none; }
-    .swatches { display: flex; gap: 4px; }
-    .swatch { width: 20px; height: 20px; border-radius: 4px; border: 1px solid #30363d; cursor: pointer; transition: transform 0.1s; }
-    .swatch:hover { transform: scale(1.2); border-color: #58a6ff; }
+    /* ── Color pickers ── */
+    .color-section { margin-top: 0.75rem; }
+    .color-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .color-row .color-label {
+      font-size: 0.8rem;
+      color: #8b949e;
+      min-width: 80px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .color-row input[type="color"] {
+      width: 0; height: 0; padding: 0; border: 0;
+      position: absolute; opacity: 0; pointer-events: none;
+    }
+    .swatches { display: flex; gap: 3px; flex-wrap: wrap; }
+    .swatch {
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      transition: transform 0.1s, border-color 0.1s;
+    }
+    .swatch:hover { transform: scale(1.15); border-color: #58a6ff; }
     .swatch.active { border-color: #f0f6fc; box-shadow: 0 0 0 1px #f0f6fc; }
-    .swatch-picker { position: relative; display: flex; align-items: center; justify-content: center; }
-    .swatch-picker svg { width: 12px; height: 12px; pointer-events: none; }
+    .swatch-picker {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-color: #30363d;
+    }
+    .swatch-picker svg { width: 10px; height: 10px; pointer-events: none; }
 
-    /* URL output */
+    /* ── Output ── */
     .url-box { position: relative; }
-    .url-display { background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 0.6rem 3.5rem 0.6rem 0.75rem; font-family: monospace; font-size: 0.8rem; color: #79c0ff; overflow-x: auto; white-space: nowrap; word-break: break-all; }
-    .btn-copy { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); background: #21262d; border: 1px solid #30363d; color: #c9d1d9; border-radius: 6px; padding: 0.3rem 0.6rem; cursor: pointer; font-size: 0.75rem; }
+    .url-display {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      padding: 0.5rem 3.5rem 0.5rem 0.7rem;
+      font-family: monospace;
+      font-size: 0.75rem;
+      color: #79c0ff;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .btn-copy {
+      position: absolute;
+      right: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #21262d;
+      border: 1px solid #30363d;
+      color: #c9d1d9;
+      border-radius: 6px;
+      padding: 0.25rem 0.5rem;
+      cursor: pointer;
+      font-size: 0.7rem;
+      transition: all 0.15s;
+    }
     .btn-copy:hover { background: #30363d; }
     .btn-copy.copied { color: #3fb950; border-color: #3fb950; }
 
-    /* Embed snippets */
-    .snippet { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
-    .snippet-label { font-size: 0.8rem; color: #8b949e; min-width: 70px; }
-    .snippet-code { flex: 1; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 0.4rem 0.6rem; font-family: monospace; font-size: 0.75rem; color: #c9d1d9; overflow-x: auto; white-space: nowrap; position: relative; }
+    .snippet { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem; }
+    .snippet-label { font-size: 0.75rem; color: #484f58; min-width: 65px; }
     .snippet-box { position: relative; flex: 1; min-width: 0; overflow: hidden; }
-    .snippet-box .btn-copy { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); }
-    .snippet-box .snippet-code { padding-right: 3.5rem; }
+    .snippet-code {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      padding: 0.4rem 3.5rem 0.4rem 0.6rem;
+      font-family: monospace;
+      font-size: 0.7rem;
+      color: #8b949e;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .snippet-box .btn-copy { right: 5px; }
 
-    /* Preview */
-    .btn-preview { background: #238636; border: 1px solid #2ea043; color: #fff; border-radius: 6px; padding: 0.5rem 1rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; width: 100%; }
+    /* ── Preview ── */
+    .btn-preview {
+      background: #238636;
+      border: 1px solid #2ea043;
+      color: #fff;
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      width: 100%;
+      transition: background 0.15s;
+    }
     .btn-preview:hover { background: #2ea043; }
-    .btn-preview:disabled { opacity: 0.6; cursor: not-allowed; }
-    .preview-container { margin-top: 0.75rem; border: 1px solid #30363d; border-radius: 6px; padding: 1rem; background: #0d1117; overflow-x: auto; display: none; text-align: center; }
-    .preview-container.visible { display: block; }
-    .preview-container img { max-width: 100%; }
-    .preview-error { color: #f85149; font-size: 0.85rem; margin-top: 0.5rem; }
+    .btn-preview:disabled { opacity: 0.5; cursor: not-allowed; }
+    .preview-area {
+      margin-top: 0.75rem;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      padding: 1rem;
+      background: #0d1117;
+      overflow-x: auto;
+      display: none;
+      text-align: center;
+    }
+    .preview-area.visible { display: block; }
+    .preview-area img { max-width: 100%; }
+    .preview-error { color: #f85149; font-size: 0.85rem; }
 
-    /* Footer */
-    .footer { text-align: center; margin-top: 1.5rem; color: #8b949e; font-size: 0.85rem; }
-
-    /* Row for mode + theme */
-    .inline-options { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
-    .inline-options > div { display: flex; align-items: center; gap: 0.5rem; }
-    .inline-options .label { font-size: 0.85rem; color: #8b949e; }
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid #21262d;
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+    .footer-made {
+      font-size: 0.85rem;
+      color: #8b949e;
+      margin-bottom: 0.75rem;
+    }
+    .footer-made strong { color: #c9d1d9; font-weight: 600; }
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: #8b949e;
+      font-size: 0.8rem;
+      transition: color 0.15s;
+    }
+    .social-link:hover { color: #f0f6fc; text-decoration: none; }
+    .social-link svg { width: 16px; height: 16px; fill: currentColor; }
+    .source-link {
+      font-size: 0.75rem;
+      color: #484f58;
+    }
+    .source-link a { color: #58a6ff; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>GitHub Contribution Merger</h1>
-    <p class="subtitle">Merge contribution graphs from multiple GitHub users into a single SVG heatmap.</p>
 
+  <div class="header">
+    <h1>GitHub Contribution Merger</h1>
+    <p>Merge contribution graphs from multiple GitHub users into a single SVG heatmap.</p>
+  </div>
+
+  <main>
     <!-- Usernames -->
-    <div class="section">
-      <div class="section-title">Usernames</div>
+    <div class="card">
+      <div class="card-label">Usernames</div>
       <div id="user-list">
         <div class="user-row">
-          <input type="text" placeholder="github username" value="" data-index="0" />
-          <button class="btn-remove" title="Remove" onclick="removeUser(this)">&times;</button>
+          <input type="text" placeholder="github username" value="" />
+          <button class="btn-icon remove" title="Remove" onclick="removeUser(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
         </div>
         <div class="user-row">
-          <input type="text" placeholder="github username" value="" data-index="1" />
-          <button class="btn-remove" title="Remove" onclick="removeUser(this)">&times;</button>
+          <input type="text" placeholder="github username" value="" />
+          <button class="btn-icon remove" title="Remove" onclick="removeUser(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
         </div>
       </div>
       <button class="btn-add" id="btn-add-user" onclick="addUser()">+ Add user</button>
     </div>
 
-    <!-- Mode & Colors -->
-    <div class="section">
-      <div class="inline-options">
-        <div>
-          <span class="label">Mode:</span>
-          <div class="option-group">
-            <label><input type="radio" name="mode" value="sum" checked /> Sum</label>
-            <label><input type="radio" name="mode" value="overlay" /> Overlay</label>
+    <!-- Options -->
+    <div class="card">
+      <div class="options-row">
+        <div class="opt-group">
+          <span class="opt-label">Mode</span>
+          <div class="pill-group">
+            <label><input type="radio" name="mode" value="sum" checked /><span>Sum</span></label>
+            <label><input type="radio" name="mode" value="overlay" /><span>Overlay</span></label>
           </div>
         </div>
-        <div>
-          <span class="label">Background:</span>
-          <div class="option-group">
-            <label><input type="radio" name="bg" value="light" checked /> Light</label>
-            <label><input type="radio" name="bg" value="dark" /> Dark</label>
+        <div class="opt-group">
+          <span class="opt-label">Background</span>
+          <div class="pill-group">
+            <label><input type="radio" name="bg" value="light" checked /><span>Light</span></label>
+            <label><input type="radio" name="bg" value="dark" /><span>Dark</span></label>
           </div>
         </div>
       </div>
-      <div style="margin-top: 0.75rem;">
-        <div id="color-pickers"></div>
-      </div>
+      <div class="color-section" id="color-pickers"></div>
     </div>
 
-    <!-- Generated URL -->
-    <div class="section">
-      <div class="section-title">Generated URL</div>
+    <!-- Output -->
+    <div class="card">
+      <div class="card-label">Generated URL</div>
       <div class="url-box">
-        <div class="url-display" id="url-display">/api/merge?users=,</div>
+        <div class="url-display" id="url-display"></div>
         <button class="btn-copy" onclick="copyText('url-display', this)">Copy</button>
       </div>
-      <div style="margin-top: 0.75rem;">
-        <div class="section-title" style="margin-bottom: 0.5rem;">Embed snippets</div>
+      <div style="margin-top: 0.6rem;">
         <div class="snippet">
-          <span class="snippet-label">Markdown:</span>
+          <span class="snippet-label">Markdown</span>
           <div class="snippet-box">
             <div class="snippet-code" id="snippet-md"></div>
             <button class="btn-copy" onclick="copyText('snippet-md', this)">Copy</button>
           </div>
         </div>
         <div class="snippet">
-          <span class="snippet-label">HTML:</span>
+          <span class="snippet-label">HTML</span>
           <div class="snippet-box">
             <div class="snippet-code" id="snippet-html"></div>
             <button class="btn-copy" onclick="copyText('snippet-html', this)">Copy</button>
@@ -151,15 +378,30 @@
     </div>
 
     <!-- Preview -->
-    <div class="section">
+    <div class="card">
       <button class="btn-preview" id="btn-preview" onclick="loadPreview()">Load Preview</button>
-      <div class="preview-container" id="preview-container"></div>
+      <div class="preview-area" id="preview-area"></div>
     </div>
+  </main>
 
-    <div class="footer">
-      <a href="https://github.com/apoorvdarshan/github-contribution-merger">View on GitHub</a>
+  <footer>
+    <div class="social-links">
+      <a class="social-link" href="https://github.com/apoorvdarshan" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a class="social-link" href="https://x.com/apoorvdarshan" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        @apoorvdarshan
+      </a>
+      <a class="social-link" href="https://linkedin.com/in/apoorvdarshan" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
     </div>
-  </div>
+    <div class="footer-made">Made by <strong>Apoorv Darshan</strong></div>
+    <div class="source-link"><a href="https://github.com/apoorvdarshan/github-contribution-merger" target="_blank" rel="noopener">View source on GitHub</a></div>
+  </footer>
 
   <script>
     const DEFAULT_CUSTOM_COLORS = [
@@ -167,6 +409,8 @@
       'db61a2', '3fb950', '79c0ff', 'd2a8ff', 'f0883e',
     ];
     const MAX_USERS = 10;
+    const REMOVE_ICON = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>';
+    const PICKER_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 22l1-1h3l9-9"/><path d="M3 21v-3l9-9"/><path d="M14 4l3-3 6 6-3 3"/><path d="M12 6l6 6"/></svg>';
 
     function getUserInputs() {
       return document.querySelectorAll('#user-list .user-row input[type="text"]');
@@ -178,14 +422,11 @@
 
     function addUser() {
       const list = document.getElementById('user-list');
-      const count = list.querySelectorAll('.user-row').length;
-      if (count >= MAX_USERS) return;
-
+      if (list.querySelectorAll('.user-row').length >= MAX_USERS) return;
       const row = document.createElement('div');
       row.className = 'user-row';
-      row.innerHTML = `<input type="text" placeholder="github username" value="" data-index="${count}" /><button class="btn-remove" title="Remove" onclick="removeUser(this)">&times;</button>`;
+      row.innerHTML = `<input type="text" placeholder="github username" value="" /><button class="btn-icon remove" title="Remove" onclick="removeUser(this)">${REMOVE_ICON}</button>`;
       list.appendChild(row);
-
       row.querySelector('input').addEventListener('input', onInputChange);
       updateAddButton();
       updateColorPickers();
@@ -220,34 +461,26 @@
       const mode = getMode();
       const targetCount = mode === 'sum' ? 1 : inputs.length;
 
-      // Add or remove rows to match target count
-      while (container.children.length > targetCount) {
-        container.lastChild.remove();
-      }
+      while (container.children.length > targetCount) container.lastChild.remove();
       while (container.children.length < targetCount) {
         const idx = container.children.length;
         const defaultColor = DEFAULT_CUSTOM_COLORS[idx % DEFAULT_CUSTOM_COLORS.length];
         const row = document.createElement('div');
         row.className = 'color-row';
-        row.dataset.colorIndex = idx;
         row.innerHTML = buildColorRow(idx, defaultColor);
         container.appendChild(row);
         setupColorRowEvents(row);
       }
 
-      // Update labels
       if (mode === 'sum') {
         const row = container.children[0];
         if (row) row.querySelector('.color-label').textContent = 'Theme color';
       } else {
         for (let i = 0; i < inputs.length && i < container.children.length; i++) {
-          const row = container.children[i];
-          row.querySelector('.color-label').textContent = inputs[i].value.trim() || `User ${i + 1}`;
+          container.children[i].querySelector('.color-label').textContent = inputs[i].value.trim() || `User ${i + 1}`;
         }
       }
     }
-
-    const PICKER_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 22l1-1h3l9-9"/><path d="M3 21v-3l9-9"/><path d="M14 4l3-3 6 6-3 3"/><path d="M12 6l6 6"/></svg>';
 
     function buildColorRow(idx, hex) {
       const isPreset = DEFAULT_CUSTOM_COLORS.includes(hex);
@@ -283,29 +516,20 @@
     function setupColorRowEvents(row) {
       const picker = row.querySelector('input[type="color"]');
       const pickerSwatch = row.querySelector('.swatch-picker');
-
-      picker.addEventListener('input', () => {
-        setActiveColor(row, picker.value.replace('#', ''));
-      });
-      pickerSwatch.addEventListener('click', () => {
-        picker.click();
-      });
+      picker.addEventListener('input', () => setActiveColor(row, picker.value.replace('#', '')));
+      pickerSwatch.addEventListener('click', () => picker.click());
       row.querySelectorAll('.swatch[data-color]').forEach(sw => {
-        sw.addEventListener('click', () => {
-          setActiveColor(row, sw.dataset.color);
-        });
+        sw.addEventListener('click', () => setActiveColor(row, sw.dataset.color));
       });
     }
 
     function getCustomColors() {
-      const container = document.getElementById('color-pickers');
-      return Array.from(container.querySelectorAll('.color-hex')).map(i => i.value.toLowerCase());
+      return Array.from(document.querySelectorAll('#color-pickers .color-hex')).map(i => i.value.toLowerCase());
     }
 
     function updateUrl() {
       const usernames = getUsernames();
       const mode = getMode();
-
       const params = new URLSearchParams();
       if (usernames.length > 0) params.set('users', usernames.join(','));
       if (mode !== 'sum') params.set('mode', mode);
@@ -318,69 +542,46 @@
 
       const url = '/api/merge?' + params.toString();
       document.getElementById('url-display').textContent = url;
-
       const fullUrl = window.location.origin + url;
       document.getElementById('snippet-md').textContent = `![Contributions](${fullUrl})`;
       document.getElementById('snippet-html').textContent = `<img src="${fullUrl}" alt="Merged contributions" />`;
     }
 
     function copyText(elementId, btn) {
-      const text = document.getElementById(elementId).textContent;
-      navigator.clipboard.writeText(text).then(() => {
+      navigator.clipboard.writeText(document.getElementById(elementId).textContent).then(() => {
         btn.textContent = 'Copied!';
         btn.classList.add('copied');
-        setTimeout(() => {
-          btn.textContent = 'Copy';
-          btn.classList.remove('copied');
-        }, 1500);
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
       });
     }
 
     function loadPreview() {
       const url = document.getElementById('url-display').textContent;
-      const container = document.getElementById('preview-container');
+      const container = document.getElementById('preview-area');
       const btn = document.getElementById('btn-preview');
-
       btn.disabled = true;
       btn.textContent = 'Loading...';
       container.classList.add('visible');
       container.innerHTML = '';
-
       const img = document.createElement('img');
       img.src = url;
       img.alt = 'Contribution graph preview';
-      img.onload = () => {
-        btn.disabled = false;
-        btn.textContent = 'Load Preview';
-      };
+      img.onload = () => { btn.disabled = false; btn.textContent = 'Load Preview'; };
       img.onerror = () => {
         container.innerHTML = '<div class="preview-error">Failed to load preview. Check usernames and try again.</div>';
-        btn.disabled = false;
-        btn.textContent = 'Load Preview';
+        btn.disabled = false; btn.textContent = 'Load Preview';
       };
       container.appendChild(img);
     }
 
-    function onInputChange() {
-      updateColorPickers();
-      updateUrl();
-    }
+    function onInputChange() { updateColorPickers(); updateUrl(); }
 
     // Event listeners
-    document.querySelectorAll('#user-list input[type="text"]').forEach(i => {
-      i.addEventListener('input', onInputChange);
-    });
-    document.querySelectorAll('input[name="mode"]').forEach(r => {
-      r.addEventListener('change', () => {
-        updateColorPickers();
-        updateUrl();
-      });
-    });
-    document.querySelectorAll('input[name="bg"]').forEach(r => {
-      r.addEventListener('change', updateUrl);
-    });
+    document.querySelectorAll('#user-list input[type="text"]').forEach(i => i.addEventListener('input', onInputChange));
+    document.querySelectorAll('input[name="mode"]').forEach(r => r.addEventListener('change', () => { updateColorPickers(); updateUrl(); }));
+    document.querySelectorAll('input[name="bg"]').forEach(r => r.addEventListener('change', updateUrl));
 
-    // Initial
+    // Init
     updateColorPickers();
     updateUrl();
   </script>
