@@ -422,11 +422,10 @@
       margin-top: 0.75rem;
       border: 1px solid #30363d;
       border-radius: 6px;
-      padding: 1rem;
+      padding: 0;
       background: #0d1117;
-      overflow-x: auto;
+      overflow: hidden;
       display: none;
-      text-align: center;
     }
     .preview-area.visible {
       display: block;
@@ -435,7 +434,7 @@
       background-size: 200% 100%;
       animation: shimmer 2s linear infinite;
     }
-    .preview-area img { width: 100%; position: relative; z-index: 1; }
+    .preview-area img { width: 100%; display: block; position: relative; z-index: 1; }
     .preview-area.loaded {
       background: #0d1117;
       animation: none;
