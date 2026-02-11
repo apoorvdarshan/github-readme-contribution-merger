@@ -14,6 +14,7 @@ If you discover a security vulnerability, please report it responsibly.
 
 Instead, please email or contact directly:
 
+- **Email**: [ad13dtu@gmail.com](mailto:ad13dtu@gmail.com)
 - **GitHub**: [@apoorvdarshan](https://github.com/apoorvdarshan)
 - **Twitter/X**: [@apoorvdarshan](https://x.com/apoorvdarshan)
 
