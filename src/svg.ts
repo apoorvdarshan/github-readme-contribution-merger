@@ -259,6 +259,6 @@ export function renderErrorSvg(message: string): string {
   const width = Math.max(400, escaped.length * 7 + 40);
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="60" viewBox="0 0 ${width} 60">
   <rect width="${width}" height="60" fill="transparent" rx="6" ry="6"/>
-  <text x="20" y="35" fill="#f87171" font-size="14" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">${escaped}</text>
+  <text x="50%" y="35" text-anchor="middle" fill="#f87171" font-size="14" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">${escaped}</text>
 </svg>`;
 }
