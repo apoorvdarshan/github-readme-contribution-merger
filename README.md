@@ -33,20 +33,36 @@ Returns an SVG image of the merged contribution graph.
 
 ### Themes
 
-- `github` — classic light green (default)
-- `github-dark` — dark mode green
-- `blue` — blue scale
-- `purple` — purple scale
-- `orange` — orange scale
+**Sum mode** — all themes available:
+
+| Theme | Description |
+|-------|-------------|
+| `github` | Classic light green (default) |
+| `github-dark` | Dark mode green |
+| `blue` | Blue scale |
+| `purple` | Purple scale |
+| `orange` | Orange scale |
+
+**Overlay mode** — only `github` and `github-dark` are supported. Each user is automatically assigned a distinct color palette (green, blue, orange, etc.) so contributors are visually distinguishable. Other theme values are ignored and fall back to `github`.
 
 ### Examples
 
 Sum mode (default):
 ```
-/api/merge?users=torvalds,gvanrossum&theme=github
+/api/merge?users=torvalds,gvanrossum&theme=purple
 ```
 
-Overlay mode with dark theme:
+Sum mode with dark theme:
+```
+/api/merge?users=torvalds,gvanrossum&theme=github-dark
+```
+
+Overlay mode (each user gets a distinct color):
+```
+/api/merge?users=torvalds,gvanrossum&mode=overlay
+```
+
+Overlay mode with dark background:
 ```
 /api/merge?users=torvalds,gvanrossum&mode=overlay&theme=github-dark
 ```
