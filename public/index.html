@@ -258,9 +258,8 @@
       const pickerBg = isPreset ? '#161b22' : '#' + hex;
       const pickerActive = !isPreset ? ' active' : '';
       return `<span class="color-label">User ${idx + 1}</span>` +
-        `<input type="color" value="#${hex}" />` +
         `<input type="hidden" class="color-hex" value="${hex}" />` +
-        `<div class="swatches">${swatchesHtml}<div class="swatch swatch-picker${pickerActive}" style="background:${pickerBg};" title="Pick custom color">${PICKER_ICON}</div></div>`;
+        `<div class="swatches">${swatchesHtml}<div class="swatch swatch-picker${pickerActive}" style="background:${pickerBg};" title="Pick custom color"><input type="color" value="#${hex}" />${PICKER_ICON}</div></div>`;
     }
 
     function setActiveColor(row, color) {
