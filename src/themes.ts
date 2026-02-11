@@ -4,8 +4,6 @@ import type { ThemeColors, OverlayPalette } from './types';
 export const DEFAULT_CUSTOM_COLORS = [
   '39d353', '58a6ff', 'bc8cff', 'e3b341', 'f47067',
   'db61a2', '3fb950', '79c0ff', 'd2a8ff', 'f0883e',
-  'ff4500', '1abc9c', '6c5ce7', 'fd79a8', '00cec9',
-  'e17055', '0984e3', 'fdcb6e',
 ];
 
 function hexToHsl(hex: string): [number, number, number] {
