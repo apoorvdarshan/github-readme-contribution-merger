@@ -198,14 +198,13 @@
       letter-spacing: -0.04em;
       line-height: 1.15;
       margin-bottom: 0.6rem;
-      filter: drop-shadow(0 0 20px rgba(96,165,250,0.15));
+      filter: drop-shadow(0 0 20px rgba(255,255,255,0.06));
     }
     .header h1 span {
       background: linear-gradient(
         135deg,
-        rgba(255,255,255,0.95) 0%,
-        var(--accent-blue) 30%,
-        var(--accent-purple) 60%,
+        rgba(255,255,255,0.9) 0%,
+        rgba(255,255,255,0.65) 50%,
         rgba(255,255,255,0.9) 100%
       );
       background-size: 200% auto;
@@ -215,11 +214,10 @@
       animation: title-shimmer 8s ease-in-out infinite;
     }
     .header .subtitle {
+      display: inline;
       font-size: 0.88rem;
       color: var(--text-tertiary);
       line-height: 1.5;
-      max-width: 400px;
-      margin: 0 auto;
       opacity: 0;
       animation: fade-up 0.5s cubic-bezier(0.16,1,0.3,1) 0.15s forwards;
     }
