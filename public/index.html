@@ -44,7 +44,8 @@
     .swatch { width: 20px; height: 20px; border-radius: 4px; border: 1px solid #30363d; cursor: pointer; transition: transform 0.1s; }
     .swatch:hover { transform: scale(1.2); border-color: #58a6ff; }
     .swatch.active { border-color: #f0f6fc; box-shadow: 0 0 0 1px #f0f6fc; }
-    .swatch-picker { background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red); }
+    .swatch-picker { position: relative; display: flex; align-items: center; justify-content: center; }
+    .swatch-picker svg { width: 12px; height: 12px; pointer-events: none; }
 
     /* URL output */
     .url-box { position: relative; }
@@ -246,25 +247,37 @@
       }
     }
 
+    const PICKER_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 22l1-1h3l9-9"/><path d="M3 21v-3l9-9"/><path d="M14 4l3-3 6 6-3 3"/><path d="M12 6l6 6"/></svg>';
+
     function buildColorRow(idx, hex) {
+      const isPreset = DEFAULT_CUSTOM_COLORS.includes(hex);
       const swatchesHtml = DEFAULT_CUSTOM_COLORS.map(c => {
         const active = c === hex ? ' active' : '';
         return `<div class="swatch${active}" data-color="${c}" style="background:#${c};" title="#${c}"></div>`;
       }).join('');
+      const pickerBg = isPreset ? '#161b22' : '#' + hex;
+      const pickerActive = !isPreset ? ' active' : '';
       return `<span class="color-label">User ${idx + 1}</span>` +
         `<input type="color" value="#${hex}" />` +
         `<input type="hidden" class="color-hex" value="${hex}" />` +
-        `<div class="swatches">${swatchesHtml}<div class="swatch swatch-picker" title="Pick custom color"></div></div>`;
+        `<div class="swatches">${swatchesHtml}<div class="swatch swatch-picker${pickerActive}" style="background:${pickerBg};" title="Pick custom color">${PICKER_ICON}</div></div>`;
     }
 
     function setActiveColor(row, color) {
       const hex = row.querySelector('.color-hex');
       const picker = row.querySelector('input[type="color"]');
+      const pickerSwatch = row.querySelector('.swatch-picker');
       hex.value = color;
       picker.value = '#' + color;
       row.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
       const match = row.querySelector(`.swatch[data-color="${color}"]`);
-      if (match) match.classList.add('active');
+      if (match) {
+        match.classList.add('active');
+        pickerSwatch.style.background = '#161b22';
+      } else {
+        pickerSwatch.classList.add('active');
+        pickerSwatch.style.background = '#' + color;
+      }
       updateUrl();
     }
 
