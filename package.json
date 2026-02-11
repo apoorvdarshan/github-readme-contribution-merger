@@ -1,0 +1,17 @@
+{
+  "name": "github-contribution-merger",
+  "version": "1.0.0",
+  "description": "Merge GitHub contribution graphs for multiple users into a single SVG heatmap",
+  "private": true,
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@vercel/node": "^3.0.0",
+    "typescript": "^5.3.0",
+    "vercel": "^37.0.0"
+  }
+}
