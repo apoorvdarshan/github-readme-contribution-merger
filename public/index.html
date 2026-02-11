@@ -17,8 +17,6 @@
       --glass-border-hover: rgba(255,255,255,0.14);
       --glass-highlight: rgba(255,255,255,0.06);
       --glass-inset: rgba(0,0,0,0.2);
-      --glass-blur: 20px;
-      --glass-saturate: 1.4;
       --text-primary: #f1f5f9;
       --text-secondary: rgba(255,255,255,0.55);
       --text-tertiary: rgba(255,255,255,0.3);
@@ -205,8 +203,6 @@
       padding: 1.25rem;
       margin-bottom: 0.625rem;
       background: var(--glass-bg);
-      -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-      backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
       border: 1px solid var(--glass-border);
       box-shadow:
         0 4px 24px rgba(0,0,0,0.2),
@@ -258,8 +254,6 @@
       font-family: inherit;
       outline: none;
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
-      -webkit-backdrop-filter: blur(8px);
-      backdrop-filter: blur(8px);
     }
     .user-row input[type="text"]:focus {
       border-color: rgba(96,165,250,0.35);
@@ -278,8 +272,6 @@
       justify-content: center;
       transition: all 0.15s ease;
       color: var(--text-tertiary);
-      -webkit-backdrop-filter: blur(8px);
-      backdrop-filter: blur(8px);
     }
     .btn-icon.remove:hover {
       color: var(--accent-red);
@@ -328,8 +320,6 @@
       border: 1px solid rgba(255,255,255,0.06);
       border-radius: var(--radius-xs);
       padding: 2px;
-      -webkit-backdrop-filter: blur(8px);
-      backdrop-filter: blur(8px);
     }
     .pill-group label {
       flex: 1 1 0%;
@@ -397,8 +387,6 @@
       align-items: center;
       justify-content: center;
       transition: all 0.2s ease;
-      -webkit-backdrop-filter: blur(8px);
-      backdrop-filter: blur(8px);
     }
     .btn-info:hover {
       background: rgba(255,255,255,0.08);
@@ -415,8 +403,6 @@
       width: 280px;
       padding: 0.85rem 1rem;
       background: rgba(15,20,28,0.85);
-      -webkit-backdrop-filter: blur(24px) saturate(1.6);
-      backdrop-filter: blur(24px) saturate(1.6);
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 12px;
       box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06);
@@ -522,8 +508,6 @@
       color: var(--accent-green);
       overflow-x: auto;
       white-space: nowrap;
-      -webkit-backdrop-filter: blur(8px);
-      backdrop-filter: blur(8px);
     }
     .btn-copy {
       position: relative;
@@ -537,8 +521,6 @@
       font-size: 0.7rem;
       font-family: inherit;
       transition: all 0.2s ease;
-      -webkit-backdrop-filter: blur(8px);
-      backdrop-filter: blur(8px);
       box-shadow: 0 1px 3px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.04);
     }
     .btn-copy:hover {
@@ -593,8 +575,6 @@
       color: var(--text-tertiary);
       overflow-x: auto;
       white-space: nowrap;
-      -webkit-backdrop-filter: blur(8px);
-      backdrop-filter: blur(8px);
     }
 
     /* ── Preview ── */
@@ -612,8 +592,6 @@
       width: 100%;
       transition: all 0.2s ease;
       outline: none;
-      -webkit-backdrop-filter: blur(8px);
-      backdrop-filter: blur(8px);
       box-shadow: 0 1px 4px rgba(0,0,0,0.15), inset 0 1px 0 rgba(74,222,128,0.1);
       animation: btn-glow-breathe 3s ease-in-out infinite;
     }
