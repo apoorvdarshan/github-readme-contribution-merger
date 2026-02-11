@@ -36,6 +36,27 @@ const THEMES: Record<string, ThemeColors> = {
     background: '#ffffff',
     border: '#d0d7de',
   },
+  'blue-dark': {
+    empty: '#161b22',
+    levels: ['#0a3069', '#0550ae', '#388bfd', '#58a6ff'],
+    text: '#c9d1d9',
+    background: '#0d1117',
+    border: '#30363d',
+  },
+  'purple-dark': {
+    empty: '#161b22',
+    levels: ['#3c1e70', '#6e40c9', '#a371f7', '#bc8cff'],
+    text: '#c9d1d9',
+    background: '#0d1117',
+    border: '#30363d',
+  },
+  'orange-dark': {
+    empty: '#161b22',
+    levels: ['#5a1e02', '#bd561d', '#d29922', '#e3b341'],
+    text: '#c9d1d9',
+    background: '#0d1117',
+    border: '#30363d',
+  },
 };
 
 export const OVERLAY_PALETTES: OverlayPalette[] = [

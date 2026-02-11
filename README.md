@@ -35,15 +35,18 @@ Returns an SVG image of the merged contribution graph.
 
 **Sum mode** — all themes available:
 
-| Theme | Description |
-|-------|-------------|
-| `github` | Classic light green (default) |
-| `github-dark` | Dark mode green |
-| `blue` | Blue scale |
-| `purple` | Purple scale |
-| `orange` | Orange scale |
+| Theme | Style | Description |
+|-------|-------|-------------|
+| `github` | Light | Classic light green (default) |
+| `github-dark` | Dark | Dark mode green |
+| `blue` | Light | Blue scale |
+| `blue-dark` | Dark | Blue scale on dark background |
+| `purple` | Light | Purple scale |
+| `purple-dark` | Dark | Purple scale on dark background |
+| `orange` | Light | Orange scale |
+| `orange-dark` | Dark | Orange scale on dark background |
 
-**Overlay mode** — only `github` and `github-dark` are supported. Each user is automatically assigned a distinct color palette (green, blue, orange, etc.) so contributors are visually distinguishable. Other theme values are ignored and fall back to `github`.
+**Overlay mode** — only `github` and dark themes (`github-dark`, `blue-dark`, `purple-dark`, `orange-dark`) are supported. Each user is automatically assigned a distinct color palette (green, blue, orange, etc.) so contributors are visually distinguishable. Other theme values are ignored and fall back to `github`.
 
 ### Examples
 

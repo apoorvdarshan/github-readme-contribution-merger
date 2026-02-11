@@ -21,7 +21,7 @@ src/github.ts         → GitHub GraphQL API client (fetch contributions for use
 src/merger.ts         → Contribution merging logic (group by date, sum counts)
 src/svg.ts            → SVG heatmap generator (sum/overlay modes, tooltips, legends)
 src/cache.ts          → In-memory cache with 5-min TTL
-src/themes.ts         → Color theme definitions (github, github-dark, blue, purple, orange)
+src/themes.ts         → Color theme definitions (github, github-dark, blue, blue-dark, purple, purple-dark, orange, orange-dark)
 ```
 
 ## Key Details
