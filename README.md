@@ -111,8 +111,8 @@ Custom colors in overlay mode (light background):
 
 ```bash
 # Clone the repository
-git clone https://github.com/apoorvdarshan/github-contribution-merger.git
-cd github-contribution-merger
+git clone https://github.com/apoorvdarshan/github-readme-contribution-merger.git
+cd github-readme-contribution-merger
 
 # Install dependencies
 npm install

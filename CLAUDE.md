@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**github-contribution-merger** — A serverless tool that fetches GitHub contribution data for multiple users, merges it, and renders a combined SVG heatmap. Deployed on Vercel at `/api/merge?users=user1,user2`. Repository is at https://github.com/apoorvdarshan/github-contribution-merger.
+**github-readme-contribution-merger** — A serverless tool that fetches GitHub contribution data for multiple users, merges it, and renders a combined SVG heatmap. Deployed on Vercel at `/api/merge?users=user1,user2`. Repository is at https://github.com/apoorvdarshan/github-readme-contribution-merger.
 
 ## Commands
 

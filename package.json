@@ -1,5 +1,5 @@
 {
-  "name": "github-contribution-merger",
+  "name": "github-readme-contribution-merger",
   "version": "1.0.0",
   "description": "Merge GitHub contribution graphs for multiple users into a single SVG heatmap",
   "private": true,

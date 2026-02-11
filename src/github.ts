@@ -34,7 +34,7 @@ export async function fetchContributions(
     headers: {
       Authorization: `bearer ${token}`,
       'Content-Type': 'application/json',
-      'User-Agent': 'github-contribution-merger',
+      'User-Agent': 'github-readme-contribution-merger',
     },
     body: JSON.stringify({
       query: CONTRIBUTIONS_QUERY,
