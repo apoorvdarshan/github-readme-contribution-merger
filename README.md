@@ -2,6 +2,10 @@
 
 Merge GitHub contribution graphs from multiple users into a single SVG heatmap. Deploy as a serverless function on Vercel.
 
+## Interactive Link Builder
+
+Visit the landing page at your deployment URL to build embed links visually — pick usernames, modes, colors, and preview the result before copying.
+
 ## Usage
 
 Embed in any Markdown file or HTML page:
@@ -27,11 +31,20 @@ Returns an SVG image of the merged contribution graph.
 | `users` | Yes* | — | Comma-separated GitHub usernames (e.g., `users=user1,user2`) |
 | `user1`, `user2`, ... | Yes* | — | Alternative: individual username params |
 | `mode` | No | `sum` | `sum` — combined total; `overlay` — color by dominant contributor |
-| `theme` | No | `github` | Color theme (see below) |
-| `colors` | No | — | Comma-separated hex colors (no `#`), one per user (overrides `theme`) |
+| `theme` | No | `github` | Preset color theme (see below) |
+| `colors` | No | — | Comma-separated 6-char hex colors (no `#`), one per user. Overrides `theme`. |
 | `bg` | No | `dark` | Background mode when using `colors`: `light` or `dark` |
 
 *Provide either `users` or `user1`+`user2`+... At least 2 usernames are required (max 10).
+
+### Custom Colors
+
+Use the `colors` param to specify your own hex colors instead of a preset theme. Each color maps to the user at the same position in `users`.
+
+- **Sum mode**: only the first color is used (4 intensity levels are auto-generated)
+- **Overlay mode**: each user gets their own 4-level palette generated from their color
+- If fewer colors than users are provided, remaining users get auto-assigned from a default palette
+- `bg=light` gives a white background; `bg=dark` (default) gives a dark background
 
 ### Themes
 
