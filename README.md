@@ -4,15 +4,15 @@
 
 ### Combine multiple GitHub contribution graphs into one embeddable SVG heatmap
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-4ade80?style=for-the-badge&logo=vercel&logoColor=white)](https://github-readme-contribution-merger.vercel.app)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-4ade80?style=for-the-badge&logo=vercel&logoColor=white)](https://github-contribution-merger.vercel.app)
 [![GitHub Stars](https://img.shields.io/github/stars/apoorvdarshan/github-readme-contribution-merger?style=for-the-badge&logo=github&color=39d353)](https://github.com/apoorvdarshan/github-readme-contribution-merger/stargazers)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 
 <br>
 
-![Merged Contribution Graph](https://github-readme-contribution-merger.vercel.app/api/merge?users=torvalds,gvanrossum&colors=39d353,58a6ff&mode=overlay)
+![Merged Contribution Graph](https://github-contribution-merger.vercel.app/api/merge?users=apoorvdarshan,octocat&colors=39d353,58a6ff&mode=overlay)
 
-*Torvalds + Van Rossum — overlay mode with custom colors*
+*Overlay mode with custom colors*
 
 </div>
 
@@ -41,18 +41,18 @@ A **free, open-source tool** that fetches GitHub contribution data for multiple 
 
 ### 1. Use the Interactive Builder (Recommended)
 
-Visit **[github-readme-contribution-merger.vercel.app](https://github-readme-contribution-merger.vercel.app)** to build your embed link visually — pick usernames, modes, colors, and preview the result before copying.
+Visit **[github-contribution-merger.vercel.app](https://github-contribution-merger.vercel.app)** to build your embed link visually — pick usernames, modes, colors, and preview the result before copying.
 
 ### 2. Or paste a URL directly
 
 **Markdown:**
 ```markdown
-![Contributions](https://github-readme-contribution-merger.vercel.app/api/merge?users=YOUR_USERNAME,FRIEND_USERNAME)
+![Contributions](https://github-contribution-merger.vercel.app/api/merge?users=YOUR_USERNAME,FRIEND_USERNAME)
 ```
 
 **HTML:**
 ```html
-<img src="https://github-readme-contribution-merger.vercel.app/api/merge?users=YOUR_USERNAME,FRIEND_USERNAME" alt="Merged GitHub contributions" />
+<img src="https://github-contribution-merger.vercel.app/api/merge?users=YOUR_USERNAME,FRIEND_USERNAME" alt="Merged GitHub contributions" />
 ```
 
 ---
@@ -65,18 +65,14 @@ Visit **[github-readme-contribution-merger.vercel.app](https://github-readme-con
 <td align="center"><strong>Overlay Mode</strong></td>
 </tr>
 <tr>
-<td>
+<td align="center">
 
-```
-/api/merge?users=torvalds,gvanrossum
-```
+![Sum Mode](https://github-contribution-merger.vercel.app/api/merge?users=apoorvdarshan,octocat)
 
 </td>
-<td>
+<td align="center">
 
-```
-/api/merge?users=torvalds,gvanrossum&mode=overlay
-```
+![Overlay Mode](https://github-contribution-merger.vercel.app/api/merge?users=apoorvdarshan,octocat&mode=overlay)
 
 </td>
 </tr>
@@ -85,18 +81,30 @@ Visit **[github-readme-contribution-merger.vercel.app](https://github-readme-con
 <td align="center"><strong>Dark Theme</strong></td>
 </tr>
 <tr>
-<td>
+<td align="center">
 
-```
-/api/merge?users=torvalds,gvanrossum&colors=ff6b6b,4ecdc4
-```
+![Custom Colors](https://github-contribution-merger.vercel.app/api/merge?users=apoorvdarshan,octocat&colors=ff6b6b,4ecdc4)
 
 </td>
-<td>
+<td align="center">
 
-```
-/api/merge?users=torvalds,gvanrossum&theme=github-dark
-```
+![Dark Theme](https://github-contribution-merger.vercel.app/api/merge?users=apoorvdarshan,octocat&theme=github-dark)
+
+</td>
+</tr>
+<tr>
+<td align="center"><strong>Purple Theme</strong></td>
+<td align="center"><strong>Blue Dark Theme</strong></td>
+</tr>
+<tr>
+<td align="center">
+
+![Purple Theme](https://github-contribution-merger.vercel.app/api/merge?users=apoorvdarshan,octocat&theme=purple)
+
+</td>
+<td align="center">
+
+![Blue Dark Theme](https://github-contribution-merger.vercel.app/api/merge?users=apoorvdarshan,octocat&theme=blue-dark)
 
 </td>
 </tr>
