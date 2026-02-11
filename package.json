@@ -4,7 +4,6 @@
   "description": "Merge GitHub contribution graphs for multiple users into a single SVG heatmap",
   "private": true,
   "scripts": {
-    "dev": "vercel dev",
     "build": "tsc --noEmit",
     "typecheck": "tsc --noEmit"
   },

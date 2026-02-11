@@ -1,4 +1,4 @@
-import type { UserContributions, MergedDay } from './types.js';
+import type { UserContributions, MergedDay } from './types';
 
 export function mergeContributions(users: UserContributions[]): MergedDay[] {
   const dayMap = new Map<string, MergedDay>();

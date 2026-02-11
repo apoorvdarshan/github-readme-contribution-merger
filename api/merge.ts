@@ -1,10 +1,10 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import type { MergeMode } from '../src/types.js';
-import { fetchMultipleUsers } from '../src/github.js';
-import { mergeContributions } from '../src/merger.js';
-import { renderSvg, renderErrorSvg } from '../src/svg.js';
-import { cacheGet, cacheSet } from '../src/cache.js';
-import { THEME_NAMES } from '../src/themes.js';
+import type { MergeMode } from '../src/types';
+import { fetchMultipleUsers } from '../src/github';
+import { mergeContributions } from '../src/merger';
+import { renderSvg, renderErrorSvg } from '../src/svg';
+import { cacheGet, cacheSet } from '../src/cache';
+import { THEME_NAMES } from '../src/themes';
 
 const USERNAME_REGEX = /^[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?$/;
 const MAX_USERS = 10;

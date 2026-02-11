@@ -1,5 +1,5 @@
-import type { MergedDay, RenderOptions } from './types.js';
-import { getTheme, getContributionLevel, OVERLAY_PALETTES } from './themes.js';
+import type { MergedDay, RenderOptions } from './types';
+import { getTheme, getContributionLevel, OVERLAY_PALETTES } from './themes';
 
 const CELL_SIZE = 11;
 const CELL_GAP = 2;

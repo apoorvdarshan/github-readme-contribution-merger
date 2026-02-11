@@ -1,5 +1,5 @@
-import type { GitHubUserResponse, UserContributions } from './types.js';
-import { cacheGet, cacheSet } from './cache.js';
+import type { GitHubUserResponse, UserContributions } from './types';
+import { cacheGet, cacheSet } from './cache';
 
 const GITHUB_GRAPHQL_URL = 'https://api.github.com/graphql';
 

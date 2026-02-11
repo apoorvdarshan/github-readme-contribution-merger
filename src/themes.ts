@@ -1,4 +1,4 @@
-import type { ThemeColors, OverlayPalette } from './types.js';
+import type { ThemeColors, OverlayPalette } from './types';
 
 const THEMES: Record<string, ThemeColors> = {
   github: {
