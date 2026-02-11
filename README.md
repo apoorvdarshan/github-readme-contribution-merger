@@ -10,7 +10,7 @@
 
 <br>
 
-![Merged Contribution Graph](https://github-contribution-merger.vercel.app/api/merge?users=torvalds,gvanrossum&colors=39d353,58a6ff&mode=overlay)
+![Merged Contribution Graph](https://github-contribution-merger.vercel.app/api/merge?users=sindresorhus,gvanrossum&colors=39d353,58a6ff&mode=overlay)
 
 *Overlay mode with custom colors*
 
@@ -67,12 +67,12 @@ Visit **[github-contribution-merger.vercel.app](https://github-contribution-merg
 <tr>
 <td align="center">
 
-![Sum Mode](https://github-contribution-merger.vercel.app/api/merge?users=torvalds,gvanrossum)
+![Sum Mode](https://github-contribution-merger.vercel.app/api/merge?users=sindresorhus,gvanrossum)
 
 </td>
 <td align="center">
 
-![Overlay Mode](https://github-contribution-merger.vercel.app/api/merge?users=torvalds,gvanrossum&mode=overlay)
+![Overlay Mode](https://github-contribution-merger.vercel.app/api/merge?users=sindresorhus,gvanrossum&mode=overlay)
 
 </td>
 </tr>
@@ -83,12 +83,12 @@ Visit **[github-contribution-merger.vercel.app](https://github-contribution-merg
 <tr>
 <td align="center">
 
-![Custom Colors](https://github-contribution-merger.vercel.app/api/merge?users=torvalds,gvanrossum&colors=ff6b6b,4ecdc4)
+![Custom Colors](https://github-contribution-merger.vercel.app/api/merge?users=sindresorhus,gvanrossum&colors=ff6b6b,4ecdc4)
 
 </td>
 <td align="center">
 
-![Dark Theme](https://github-contribution-merger.vercel.app/api/merge?users=torvalds,gvanrossum&theme=github-dark)
+![Dark Theme](https://github-contribution-merger.vercel.app/api/merge?users=sindresorhus,gvanrossum&theme=github-dark)
 
 </td>
 </tr>
@@ -99,12 +99,12 @@ Visit **[github-contribution-merger.vercel.app](https://github-contribution-merg
 <tr>
 <td align="center">
 
-![Purple Theme](https://github-contribution-merger.vercel.app/api/merge?users=torvalds,gvanrossum&theme=purple)
+![Purple Theme](https://github-contribution-merger.vercel.app/api/merge?users=sindresorhus,gvanrossum&theme=purple)
 
 </td>
 <td align="center">
 
-![Blue Dark Theme](https://github-contribution-merger.vercel.app/api/merge?users=torvalds,gvanrossum&theme=blue-dark)
+![Blue Dark Theme](https://github-contribution-merger.vercel.app/api/merge?users=sindresorhus,gvanrossum&theme=blue-dark)
 
 </td>
 </tr>
