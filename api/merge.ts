@@ -87,9 +87,11 @@ export default async function handler(
     ? (modeParam as MergeMode)
     : 'sum';
 
-  // Parse theme
+  // Parse theme — in overlay mode, only github and github-dark are allowed
   const themeParam = Array.isArray(req.query.theme) ? req.query.theme[0] : req.query.theme;
-  const theme = THEME_NAMES.includes(themeParam ?? '') ? themeParam! : 'github';
+  const OVERLAY_THEMES = ['github', 'github-dark'];
+  const allowedThemes = mode === 'overlay' ? OVERLAY_THEMES : THEME_NAMES;
+  const theme = allowedThemes.includes(themeParam ?? '') ? themeParam! : 'github';
 
   // Check SVG cache
   const svgCacheKey = `svg:${usernames.join(',')}:${mode}:${theme}`;
