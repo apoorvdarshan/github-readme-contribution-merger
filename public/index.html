@@ -39,14 +39,12 @@
     /* Color pickers */
     .color-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
     .color-row .color-label { font-size: 0.85rem; color: #8b949e; min-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .color-row input[type="color"] { width: 32px; height: 32px; border: 1px solid #30363d; border-radius: 6px; background: #0d1117; cursor: pointer; padding: 2px; }
-    .color-row input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
-    .color-row input[type="color"]::-webkit-color-swatch { border: none; border-radius: 4px; }
-    .color-hex { background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; border-radius: 6px; padding: 0.3rem 0.5rem; font-size: 0.8rem; width: 75px; font-family: monospace; outline: none; }
-    .color-hex:focus { border-color: #58a6ff; }
+    .color-row input[type="color"] { width: 0; height: 0; padding: 0; border: 0; position: absolute; opacity: 0; pointer-events: none; }
     .swatches { display: flex; gap: 4px; }
     .swatch { width: 20px; height: 20px; border-radius: 4px; border: 1px solid #30363d; cursor: pointer; transition: transform 0.1s; }
     .swatch:hover { transform: scale(1.2); border-color: #58a6ff; }
+    .swatch.active { border-color: #f0f6fc; box-shadow: 0 0 0 1px #f0f6fc; }
+    .swatch-picker { background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red); }
 
     /* URL output */
     .url-box { position: relative; }
@@ -249,37 +247,40 @@
     }
 
     function buildColorRow(idx, hex) {
-      const swatchesHtml = DEFAULT_CUSTOM_COLORS.map(c =>
-        `<div class="swatch" data-color="${c}" style="background:#${c};" title="#${c}"></div>`
-      ).join('');
+      const swatchesHtml = DEFAULT_CUSTOM_COLORS.map(c => {
+        const active = c === hex ? ' active' : '';
+        return `<div class="swatch${active}" data-color="${c}" style="background:#${c};" title="#${c}"></div>`;
+      }).join('');
       return `<span class="color-label">User ${idx + 1}</span>` +
         `<input type="color" value="#${hex}" />` +
-        `<input type="text" class="color-hex" value="${hex}" maxlength="6" placeholder="hex" />` +
-        `<div class="swatches">${swatchesHtml}</div>`;
+        `<input type="hidden" class="color-hex" value="${hex}" />` +
+        `<div class="swatches">${swatchesHtml}<div class="swatch swatch-picker" title="Pick custom color"></div></div>`;
+    }
+
+    function setActiveColor(row, color) {
+      const hex = row.querySelector('.color-hex');
+      const picker = row.querySelector('input[type="color"]');
+      hex.value = color;
+      picker.value = '#' + color;
+      row.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+      const match = row.querySelector(`.swatch[data-color="${color}"]`);
+      if (match) match.classList.add('active');
+      updateUrl();
     }
 
     function setupColorRowEvents(row) {
       const picker = row.querySelector('input[type="color"]');
-      const hex = row.querySelector('.color-hex');
+      const pickerSwatch = row.querySelector('.swatch-picker');
 
       picker.addEventListener('input', () => {
-        hex.value = picker.value.replace('#', '');
-        updateUrl();
+        setActiveColor(row, picker.value.replace('#', ''));
       });
-      hex.addEventListener('input', () => {
-        const v = hex.value.replace(/[^0-9a-fA-F]/g, '').slice(0, 6);
-        hex.value = v;
-        if (v.length === 6) {
-          picker.value = '#' + v;
-        }
-        updateUrl();
+      pickerSwatch.addEventListener('click', () => {
+        picker.click();
       });
-      row.querySelectorAll('.swatch').forEach(sw => {
+      row.querySelectorAll('.swatch[data-color]').forEach(sw => {
         sw.addEventListener('click', () => {
-          const c = sw.dataset.color;
-          picker.value = '#' + c;
-          hex.value = c;
-          updateUrl();
+          setActiveColor(row, sw.dataset.color);
         });
       });
     }
