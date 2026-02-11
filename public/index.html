@@ -247,13 +247,14 @@
     function updateColorPickers() {
       const container = document.getElementById('color-pickers');
       const inputs = getUserInputs();
-      const rows = container.querySelectorAll('.color-row');
+      const mode = getMode();
+      const targetCount = mode === 'sum' ? 1 : inputs.length;
 
-      // Add or remove rows to match user count
-      while (container.children.length > inputs.length) {
+      // Add or remove rows to match target count
+      while (container.children.length > targetCount) {
         container.lastChild.remove();
       }
-      while (container.children.length < inputs.length) {
+      while (container.children.length < targetCount) {
         const idx = container.children.length;
         const defaultColor = DEFAULT_CUSTOM_COLORS[idx % DEFAULT_CUSTOM_COLORS.length];
         const row = document.createElement('div');
@@ -265,10 +266,14 @@
       }
 
       // Update labels
-      for (let i = 0; i < inputs.length; i++) {
-        const row = container.children[i];
-        const label = row.querySelector('.color-label');
-        label.textContent = inputs[i].value.trim() || `User ${i + 1}`;
+      if (mode === 'sum') {
+        const row = container.children[0];
+        if (row) row.querySelector('.color-label').textContent = 'Theme color';
+      } else {
+        for (let i = 0; i < inputs.length && i < container.children.length; i++) {
+          const row = container.children[i];
+          row.querySelector('.color-label').textContent = inputs[i].value.trim() || `User ${i + 1}`;
+        }
       }
     }
 
@@ -323,7 +328,8 @@
       if (mode !== 'sum') params.set('mode', mode);
 
       if (custom) {
-        const colors = getCustomColors().filter(c => /^[0-9a-f]{6}$/.test(c));
+        const allColors = getCustomColors().filter(c => /^[0-9a-f]{6}$/.test(c));
+        const colors = mode === 'sum' ? allColors.slice(0, 1) : allColors;
         if (colors.length > 0) params.set('colors', colors.join(','));
         const bg = getBg();
         if (bg !== 'dark') params.set('bg', bg);
@@ -387,7 +393,10 @@
       i.addEventListener('input', onInputChange);
     });
     document.querySelectorAll('input[name="mode"]').forEach(r => {
-      r.addEventListener('change', updateUrl);
+      r.addEventListener('change', () => {
+        updateColorPickers();
+        updateUrl();
+      });
     });
     document.getElementById('theme-select').addEventListener('change', updateUrl);
     document.getElementById('use-custom-colors').addEventListener('change', () => {
