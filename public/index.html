@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GitHub Contribution Merger</title>
+  <title>GitHub Readme Contribution Merger</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230d1117'/><rect x='3' y='3' width='5' height='5' rx='1' fill='%230e4429'/><rect x='10' y='3' width='5' height='5' rx='1' fill='%2326a641'/><rect x='17' y='3' width='5' height='5' rx='1' fill='%2339d353'/><rect x='24' y='3' width='5' height='5' rx='1' fill='%230e4429'/><rect x='3' y='10' width='5' height='5' rx='1' fill='%2339d353'/><rect x='10' y='10' width='5' height='5' rx='1' fill='%23006d32'/><rect x='17' y='10' width='5' height='5' rx='1' fill='%230e4429'/><rect x='24' y='10' width='5' height='5' rx='1' fill='%2326a641'/><rect x='3' y='17' width='5' height='5' rx='1' fill='%23006d32'/><rect x='10' y='17' width='5' height='5' rx='1' fill='%2339d353'/><rect x='17' y='17' width='5' height='5' rx='1' fill='%2326a641'/><rect x='24' y='17' width='5' height='5' rx='1' fill='%2339d353'/><rect x='3' y='24' width='5' height='5' rx='1' fill='%2326a641'/><rect x='10' y='24' width='5' height='5' rx='1' fill='%230e4429'/><rect x='17' y='24' width='5' height='5' rx='1' fill='%2339d353'/><rect x='24' y='24' width='5' height='5' rx='1' fill='%23006d32'/></svg>">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -19,22 +20,102 @@
     a { color: #58a6ff; text-decoration: none; }
     a:hover { text-decoration: underline; }
 
+    /* ── Animations ── */
+    @keyframes gradient-shift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes cell-pulse {
+      0%, 100% { opacity: 0.15; }
+      50% { opacity: 0.6; }
+    }
+
+    @keyframes fade-slide-up {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes swatch-bounce {
+      0% { transform: scale(1); }
+      30% { transform: scale(1.3); }
+      70% { transform: scale(0.95); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes check-pop {
+      0% { transform: translate(-50%, -50%) scale(0); }
+      50% { transform: translate(-50%, -50%) scale(1.2); }
+      100% { transform: translate(-50%, -50%) scale(1); }
+    }
+
+    @keyframes green-pulse {
+      0% { box-shadow: 0 0 0 0 rgba(63, 185, 80, 0.5); }
+      100% { box-shadow: 0 0 0 8px rgba(63, 185, 80, 0); }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    @keyframes row-enter {
+      from { opacity: 0; max-height: 0; }
+      to { opacity: 1; max-height: 50px; }
+    }
+
     /* ── Header ── */
     .header {
       text-align: center;
       padding: 3rem 1.5rem 2rem;
+      opacity: 0;
+      animation: fade-slide-up 0.4s ease-out forwards;
     }
     .header h1 {
-      font-size: 1.8rem;
-      color: #f0f6fc;
-      margin-bottom: 0.4rem;
+      font-size: 2.2rem;
       letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
+      background: linear-gradient(135deg, #58a6ff, #bc8cff, #f0883e, #3fb950, #58a6ff);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradient-shift 8s ease infinite;
     }
     .header p {
       color: #8b949e;
       font-size: 0.95rem;
       line-height: 1.5;
     }
+
+    /* ── Decorative Grid ── */
+    .deco-grid {
+      display: grid;
+      grid-template-columns: repeat(9, 10px);
+      grid-template-rows: repeat(7, 10px);
+      gap: 3px;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+    .deco-cell {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      background: #21262d;
+    }
+    .deco-cell.c1 { background: #0e4429; animation: cell-pulse 4s ease-in-out infinite; }
+    .deco-cell.c2 { background: #006d32; animation: cell-pulse 4s ease-in-out infinite; }
+    .deco-cell.c3 { background: #26a641; animation: cell-pulse 4s ease-in-out infinite; }
+    .deco-cell.c4 { background: #39d353; animation: cell-pulse 4s ease-in-out infinite; }
+    .deco-cell:nth-child(3n+1).c1, .deco-cell:nth-child(3n+1).c2,
+    .deco-cell:nth-child(3n+1).c3, .deco-cell:nth-child(3n+1).c4 { animation-delay: 0s; }
+    .deco-cell:nth-child(3n+2).c1, .deco-cell:nth-child(3n+2).c2,
+    .deco-cell:nth-child(3n+2).c3, .deco-cell:nth-child(3n+2).c4 { animation-delay: 1s; }
+    .deco-cell:nth-child(3n).c1, .deco-cell:nth-child(3n).c2,
+    .deco-cell:nth-child(3n).c3, .deco-cell:nth-child(3n).c4 { animation-delay: 2s; }
+    .deco-cell:nth-child(5n).c1, .deco-cell:nth-child(5n).c2,
+    .deco-cell:nth-child(5n).c3, .deco-cell:nth-child(5n).c4 { animation-delay: 3s; }
 
     /* ── Main ── */
     main {
@@ -52,6 +133,19 @@
       border-radius: 10px;
       padding: 1.25rem;
       margin-bottom: 0.75rem;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.08);
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      opacity: 0;
+      animation: fade-slide-up 0.4s ease-out forwards;
+    }
+    .card:nth-child(1) { animation-delay: 0s; }
+    .card:nth-child(2) { animation-delay: 0.1s; }
+    .card:nth-child(3) { animation-delay: 0.2s; }
+    .card:nth-child(4) { animation-delay: 0.3s; }
+    .card:hover {
+      transform: translateY(-1px);
+      border-color: #484f58;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15), 0 4px 12px rgba(0,0,0,0.1), 0 0 20px rgba(88,166,255,0.04);
     }
     .card-label {
       font-size: 0.7rem;
@@ -68,6 +162,7 @@
       gap: 0.5rem;
       margin-bottom: 0.4rem;
       align-items: center;
+      animation: row-enter 0.25s ease-out forwards;
     }
     .user-row input[type="text"] {
       flex: 1;
@@ -78,9 +173,13 @@
       padding: 0.45rem 0.7rem;
       font-size: 0.85rem;
       outline: none;
-      transition: border-color 0.15s;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.15);
     }
-    .user-row input[type="text"]:focus { border-color: #58a6ff; }
+    .user-row input[type="text"]:focus {
+      border-color: #58a6ff;
+      box-shadow: 0 0 0 3px rgba(88,166,255,0.15);
+    }
     .user-row input[type="text"]::placeholder { color: #484f58; }
     .btn-icon {
       background: none;
@@ -126,30 +225,52 @@
     }
     .pill-group {
       display: flex;
+      position: relative;
       background: #0d1117;
       border: 1px solid #30363d;
       border-radius: 6px;
-      overflow: hidden;
+      padding: 2px;
     }
     .pill-group label {
       padding: 0.3rem 0.65rem;
       font-size: 0.8rem;
       cursor: pointer;
-      transition: all 0.15s;
+      transition: color 0.15s;
       color: #8b949e;
       user-select: none;
+      position: relative;
+      z-index: 1;
     }
     .pill-group label:hover { color: #c9d1d9; }
     .pill-group input { display: none; }
     .pill-group input:checked + span {
       color: #f0f6fc;
-      background: #30363d;
     }
     .pill-group label span {
       display: block;
       padding: 0.3rem 0.65rem;
       margin: -0.3rem -0.65rem;
-      border-radius: 5px;
+      border-radius: 4px;
+      transition: color 0.2s;
+    }
+
+    /* Sliding pill indicator */
+    @supports selector(:has(*)) {
+      .pill-group::before {
+        content: '';
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: calc(50% - 2px);
+        height: calc(100% - 4px);
+        background: #30363d;
+        border-radius: 4px;
+        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 0;
+      }
+      .pill-group:has(label:last-child input:checked)::before {
+        transform: translateX(100%);
+      }
     }
 
     /* ── Color pickers ── */
@@ -180,10 +301,14 @@
       border-radius: 4px;
       border: 1.5px solid transparent;
       cursor: pointer;
-      transition: transform 0.1s, border-color 0.1s;
+      transition: transform 0.1s, border-color 0.1s, box-shadow 0.2s;
     }
     .swatch:hover { transform: scale(1.15); border-color: #58a6ff; }
-    .swatch.active { border-color: #f0f6fc; box-shadow: 0 0 0 1px #f0f6fc; }
+    .swatch.active {
+      border-color: #f0f6fc;
+      box-shadow: 0 0 0 1.5px #f0f6fc;
+      animation: swatch-bounce 0.3s ease-out;
+    }
     .swatch-picker {
       position: relative;
       display: flex;
@@ -205,6 +330,7 @@
       color: #79c0ff;
       overflow-x: auto;
       white-space: nowrap;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.15);
     }
     .btn-copy {
       position: absolute;
@@ -221,7 +347,32 @@
       transition: all 0.15s;
     }
     .btn-copy:hover { background: #30363d; }
-    .btn-copy.copied { color: #3fb950; border-color: #3fb950; }
+    .btn-copy.copied {
+      color: #3fb950;
+      border-color: #3fb950;
+      animation: green-pulse 0.4s ease-out;
+      position: absolute;
+    }
+    .btn-copy.copied::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #21262d;
+      border-radius: 5px;
+      z-index: 1;
+    }
+    .btn-copy.copied::after {
+      content: '\2713';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #3fb950;
+      font-size: 0.8rem;
+      font-weight: bold;
+      z-index: 2;
+      animation: check-pop 0.25s ease-out;
+    }
 
     .snippet { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem; }
     .snippet-label { font-size: 0.75rem; color: #484f58; min-width: 65px; }
@@ -236,6 +387,7 @@
       color: #8b949e;
       overflow-x: auto;
       white-space: nowrap;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.15);
     }
     .snippet-box .btn-copy { right: 5px; }
 
@@ -250,9 +402,11 @@
       font-size: 0.85rem;
       font-weight: 500;
       width: 100%;
-      transition: background 0.15s;
+      transition: background 0.15s, box-shadow 0.15s;
+      outline: none;
     }
     .btn-preview:hover { background: #2ea043; }
+    .btn-preview:focus-visible { box-shadow: 0 0 0 3px rgba(63,185,80,0.3); }
     .btn-preview:disabled { opacity: 0.5; cursor: not-allowed; }
     .preview-area {
       margin-top: 0.75rem;
@@ -264,15 +418,37 @@
       display: none;
       text-align: center;
     }
-    .preview-area.visible { display: block; }
-    .preview-area img { max-width: 100%; }
+    .preview-area.visible {
+      display: block;
+      min-height: 120px;
+      background: linear-gradient(90deg, #161b22 25%, #21262d 50%, #161b22 75%);
+      background-size: 200% 100%;
+      animation: shimmer 2s linear infinite;
+    }
+    .preview-area img { max-width: 100%; position: relative; z-index: 1; }
+    .preview-area.loaded {
+      background: #0d1117;
+      animation: none;
+      min-height: 0;
+    }
     .preview-error { color: #f85149; font-size: 0.85rem; }
 
     /* ── Footer ── */
     footer {
-      border-top: 1px solid #21262d;
+      position: relative;
       padding: 2rem 1.5rem;
       text-align: center;
+      opacity: 0;
+      animation: fade-slide-up 0.4s ease-out 0.4s forwards;
+    }
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #484f58, transparent);
     }
     .footer-made {
       font-size: 0.85rem;
@@ -288,22 +464,40 @@
     }
     .social-link {
       color: #8b949e;
-      transition: color 0.15s;
+      transition: color 0.2s, transform 0.2s;
     }
-    .social-link:hover { color: #f0f6fc; text-decoration: none; }
+    .social-link:hover { transform: scale(1.15); text-decoration: none; }
+    .social-link.gh:hover { color: #f0f6fc; }
+    .social-link.x:hover { color: #1da1f2; }
+    .social-link.li:hover { color: #0a66c2; }
     .social-link svg { width: 20px; height: 20px; fill: currentColor; display: block; }
     .source-link {
       font-size: 0.75rem;
       color: #484f58;
     }
     .source-link a { color: #58a6ff; }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .header h1 { font-size: 1.5rem; }
+      .deco-grid { grid-template-columns: repeat(7, 10px); }
+      .options-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+      .snippet { flex-direction: column; align-items: flex-start; }
+      .snippet-box { width: 100%; }
+      .snippet-label { min-width: auto; }
+    }
   </style>
 </head>
 <body>
 
   <div class="header">
-    <h1>GitHub Contribution Merger</h1>
+    <h1>GitHub Readme Contribution Merger</h1>
     <p>Merge contribution graphs from multiple GitHub users into a single SVG heatmap.</p>
+    <div class="deco-grid" aria-hidden="true"></div>
   </div>
 
   <main>
@@ -382,13 +576,13 @@
 
   <footer>
     <div class="social-links">
-      <a class="social-link" href="https://github.com/apoorvdarshan" target="_blank" rel="noopener">
+      <a class="social-link gh" href="https://github.com/apoorvdarshan" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
       </a>
-      <a class="social-link" href="https://x.com/apoorvdarshan" target="_blank" rel="noopener" title="X (Twitter)">
+      <a class="social-link x" href="https://x.com/apoorvdarshan" target="_blank" rel="noopener" title="X (Twitter)">
         <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
       </a>
-      <a class="social-link" href="https://linkedin.com/in/apoorvdarshan" target="_blank" rel="noopener" title="LinkedIn">
+      <a class="social-link li" href="https://linkedin.com/in/apoorvdarshan" target="_blank" rel="noopener" title="LinkedIn">
         <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
       </a>
     </div>
@@ -404,6 +598,20 @@
     const MAX_USERS = 10;
     const REMOVE_ICON = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>';
     const PICKER_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 22l1-1h3l9-9"/><path d="M3 21v-3l9-9"/><path d="M14 4l3-3 6 6-3 3"/><path d="M12 6l6 6"/></svg>';
+
+    // Build decorative contribution grid
+    (function buildDecoGrid() {
+      const grid = document.querySelector('.deco-grid');
+      const colorClasses = ['', '', '', '', 'c1', '', 'c2', '', '', 'c3', '', '', 'c4', '', '',
+        '', 'c1', '', '', '', 'c3', '', 'c4', '', '', '', 'c2', '', 'c1', '',
+        '', '', 'c2', '', 'c4', '', '', 'c1', '', '', 'c3', '', '', '', 'c2',
+        '', 'c3', '', '', 'c1', '', '', '', 'c4', '', '', 'c2', '', 'c3', '', '', '', 'c1', ''];
+      for (let i = 0; i < 63; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'deco-cell' + (colorClasses[i] ? ' ' + colorClasses[i] : '');
+        grid.appendChild(cell);
+      }
+    })();
 
     function getUserInputs() {
       return document.querySelectorAll('#user-list .user-row input[type="text"]');
@@ -542,9 +750,8 @@
 
     function copyText(elementId, btn) {
       navigator.clipboard.writeText(document.getElementById(elementId).textContent).then(() => {
-        btn.textContent = 'Copied!';
         btn.classList.add('copied');
-        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+        setTimeout(() => { btn.classList.remove('copied'); }, 1500);
       });
     }
 
@@ -555,12 +762,14 @@
       btn.disabled = true;
       btn.textContent = 'Loading...';
       container.classList.add('visible');
+      container.classList.remove('loaded');
       container.innerHTML = '';
       const img = document.createElement('img');
       img.src = url;
       img.alt = 'Contribution graph preview';
-      img.onload = () => { btn.disabled = false; btn.textContent = 'Load Preview'; };
+      img.onload = () => { container.classList.add('loaded'); btn.disabled = false; btn.textContent = 'Load Preview'; };
       img.onerror = () => {
+        container.classList.add('loaded');
         container.innerHTML = '<div class="preview-error">Failed to load preview. Check usernames and try again.</div>';
         btn.disabled = false; btn.textContent = 'Load Preview';
       };
