@@ -1114,7 +1114,7 @@
       const img = document.createElement('img');
       img.src = url;
       img.alt = 'Contribution graph preview';
-      img.onload = () => { container.classList.add('loaded'); btn.disabled = false; btn.textContent = 'Load Preview'; container.scrollIntoView({ behavior: 'smooth', block: 'end' }); };
+      img.onload = () => { container.classList.add('loaded'); btn.disabled = false; btn.textContent = 'Load Preview'; window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); };
       img.onerror = () => {
         container.classList.add('loaded');
         container.innerHTML = '<div class="preview-error">Failed to load preview. Check usernames and try again.</div>';
