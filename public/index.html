@@ -41,59 +41,6 @@
       overflow-x: hidden;
     }
 
-    /* ── Ambient background orbs ── */
-    .bg-mesh {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      overflow: hidden;
-      pointer-events: none;
-    }
-    .bg-orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(100px);
-    }
-    .bg-orb:nth-child(1) {
-      width: 500px; height: 500px;
-      background: rgba(96,165,250,0.08);
-      top: -10%; left: -5%;
-      animation: orb-drift-1 20s ease-in-out infinite;
-    }
-    .bg-orb:nth-child(2) {
-      width: 400px; height: 400px;
-      background: rgba(192,132,252,0.07);
-      top: 20%; right: -10%;
-      animation: orb-drift-2 25s ease-in-out infinite;
-    }
-    .bg-orb:nth-child(3) {
-      width: 450px; height: 450px;
-      background: rgba(74,222,128,0.05);
-      bottom: -5%; left: 20%;
-      animation: orb-drift-3 22s ease-in-out infinite;
-    }
-    .bg-orb:nth-child(4) {
-      width: 300px; height: 300px;
-      background: rgba(96,165,250,0.04);
-      bottom: 30%; right: 20%;
-      animation: orb-drift-1 18s ease-in-out infinite reverse;
-    }
-    @keyframes orb-drift-1 {
-      0%,100% { transform: translate(0,0); }
-      33% { transform: translate(30px,-40px); }
-      66% { transform: translate(-20px,30px); }
-    }
-    @keyframes orb-drift-2 {
-      0%,100% { transform: translate(0,0); }
-      33% { transform: translate(-40px,20px); }
-      66% { transform: translate(20px,-30px); }
-    }
-    @keyframes orb-drift-3 {
-      0%,100% { transform: translate(0,0); }
-      33% { transform: translate(20px,30px); }
-      66% { transform: translate(-30px,-20px); }
-    }
-
     .page-wrap {
       position: relative;
       z-index: 1;
@@ -917,13 +864,6 @@
   </style>
 </head>
 <body>
-
-  <div class="bg-mesh">
-    <div class="bg-orb"></div>
-    <div class="bg-orb"></div>
-    <div class="bg-orb"></div>
-    <div class="bg-orb"></div>
-  </div>
 
   <div class="page-wrap">
     <div class="header">
