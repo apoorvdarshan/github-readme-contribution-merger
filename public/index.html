@@ -36,10 +36,7 @@
     select { background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; border-radius: 6px; padding: 0.5rem 0.75rem; font-size: 0.9rem; outline: none; cursor: pointer; }
     select:focus { border-color: #58a6ff; }
 
-    /* Custom colors section */
-    .custom-colors { margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid #30363d; display: none; }
-    .custom-colors.visible { display: block; }
-    .bg-toggle { margin-bottom: 0.75rem; }
+    /* Color pickers */
     .color-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
     .color-row .color-label { font-size: 0.85rem; color: #8b949e; min-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .color-row input[type="color"] { width: 32px; height: 32px; border: 1px solid #30363d; border-radius: 6px; background: #0d1117; cursor: pointer; padding: 2px; }
@@ -105,7 +102,7 @@
       <button class="btn-add" id="btn-add-user" onclick="addUser()">+ Add user</button>
     </div>
 
-    <!-- Mode & Theme -->
+    <!-- Mode & Colors -->
     <div class="section">
       <div class="inline-options">
         <div>
@@ -115,33 +112,15 @@
             <label><input type="radio" name="mode" value="overlay" /> Overlay</label>
           </div>
         </div>
-        <div id="theme-group">
-          <span class="label">Theme:</span>
-          <select id="theme-select">
-            <option value="github">github</option>
-            <option value="github-dark">github-dark</option>
-            <option value="blue">blue</option>
-            <option value="blue-dark">blue-dark</option>
-            <option value="purple">purple</option>
-            <option value="purple-dark">purple-dark</option>
-            <option value="orange">orange</option>
-            <option value="orange-dark">orange-dark</option>
-          </select>
+        <div>
+          <span class="label">Background:</span>
+          <div class="option-group">
+            <label><input type="radio" name="bg" value="light" checked /> Light</label>
+            <label><input type="radio" name="bg" value="dark" /> Dark</label>
+          </div>
         </div>
       </div>
       <div style="margin-top: 0.75rem;">
-        <label class="option-group" style="display: inline-flex;">
-          <input type="checkbox" id="use-custom-colors" /> Use custom colors
-        </label>
-      </div>
-      <div class="custom-colors" id="custom-colors-section">
-        <div class="bg-toggle">
-          <span class="label" style="font-size: 0.85rem; color: #8b949e;">Background:</span>
-          <div class="option-group" style="display: inline-flex; margin-left: 0.5rem;">
-            <label><input type="radio" name="bg" value="light" /> Light</label>
-            <label><input type="radio" name="bg" value="dark" checked /> Dark</label>
-          </div>
-        </div>
         <div id="color-pickers"></div>
       </div>
     </div>
@@ -232,16 +211,8 @@
       return document.querySelector('input[name="mode"]:checked').value;
     }
 
-    function getTheme() {
-      return document.getElementById('theme-select').value;
-    }
-
     function getBg() {
       return document.querySelector('input[name="bg"]:checked').value;
-    }
-
-    function isCustomColors() {
-      return document.getElementById('use-custom-colors').checked;
     }
 
     function updateColorPickers() {
@@ -321,22 +292,16 @@
     function updateUrl() {
       const usernames = getUsernames();
       const mode = getMode();
-      const custom = isCustomColors();
 
       const params = new URLSearchParams();
       if (usernames.length > 0) params.set('users', usernames.join(','));
       if (mode !== 'sum') params.set('mode', mode);
 
-      if (custom) {
-        const allColors = getCustomColors().filter(c => /^[0-9a-f]{6}$/.test(c));
-        const colors = mode === 'sum' ? allColors.slice(0, 1) : allColors;
-        if (colors.length > 0) params.set('colors', colors.join(','));
-        const bg = getBg();
-        if (bg !== 'dark') params.set('bg', bg);
-      } else {
-        const theme = getTheme();
-        if (theme !== 'github') params.set('theme', theme);
-      }
+      const allColors = getCustomColors().filter(c => /^[0-9a-f]{6}$/.test(c));
+      const colors = mode === 'sum' ? allColors.slice(0, 1) : allColors;
+      if (colors.length > 0) params.set('colors', colors.join(','));
+      const bg = getBg();
+      if (bg !== 'dark') params.set('bg', bg);
 
       const url = '/api/merge?' + params.toString();
       document.getElementById('url-display').textContent = url;
@@ -397,20 +362,6 @@
         updateColorPickers();
         updateUrl();
       });
-    });
-    document.getElementById('theme-select').addEventListener('change', updateUrl);
-    document.getElementById('use-custom-colors').addEventListener('change', () => {
-      const section = document.getElementById('custom-colors-section');
-      const themeGroup = document.getElementById('theme-group');
-      if (isCustomColors()) {
-        section.classList.add('visible');
-        themeGroup.style.display = 'none';
-        updateColorPickers();
-      } else {
-        section.classList.remove('visible');
-        themeGroup.style.display = '';
-      }
-      updateUrl();
     });
     document.querySelectorAll('input[name="bg"]').forEach(r => {
       r.addEventListener('change', updateUrl);
