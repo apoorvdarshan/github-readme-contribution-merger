@@ -551,19 +551,9 @@
       transition: transform 0.06s ease;
     }
     .btn-copy.copied {
-      color: var(--accent-green);
+      color: transparent;
       border-color: rgba(74,222,128,0.3);
       animation: pulse-ring 0.4s ease-out;
-    }
-    .btn-copy.copied::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(255,255,255,0.05);
-      border-radius: 6px;
-      z-index: 1;
-      -webkit-backdrop-filter: blur(8px);
-      backdrop-filter: blur(8px);
     }
     .btn-copy.copied::after {
       content: '\2713';
