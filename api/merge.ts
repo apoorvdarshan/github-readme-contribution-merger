@@ -64,7 +64,7 @@ export default async function handler(
   if (usernames.length < 2) {
     respondSvg(
       res,
-      renderErrorSvg('At least 2 usernames required. Use ?users=user1,user2 or ?user1=...&user2=...'),
+      renderErrorSvg('At least 2 usernames are required.'),
       400
     );
     return;
