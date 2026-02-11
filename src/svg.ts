@@ -111,7 +111,7 @@ export function renderSvg(days: MergedDay[], options: RenderOptions): string {
 
   const gridWidth = weeks.length * CELL_STEP;
   const gridHeight = DAYS_IN_WEEK * CELL_STEP;
-  const showUsersLabel = options.usernames.length > 0;
+  const showUsersLabel = options.mode !== 'overlay' && options.usernames.length > 1;
   const totalWidth = PADDING * 2 + LABEL_AREA_X + gridWidth;
   const totalHeight =
     PADDING * 2 +
@@ -188,33 +188,52 @@ export function renderSvg(days: MergedDay[], options: RenderOptions): string {
   const legendY = PADDING + LABEL_AREA_Y + gridHeight + 12;
   const legendElements: string[] = [];
 
-  legendElements.push(
-    `<text x="${PADDING + LABEL_AREA_X}" y="${legendY + CELL_SIZE}" fill="${theme.text}" font-size="9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">Less</text>`
-  );
-
-  const legendStartX = PADDING + LABEL_AREA_X + 30;
-  const legendColors = [theme.empty, ...theme.levels];
-  for (let i = 0; i < legendColors.length; i++) {
+  if (options.mode === 'overlay' && options.usernames.length > 1) {
+    // Overlay mode: show per-user color scales
+    let xOffset = PADDING + LABEL_AREA_X;
+    for (let i = 0; i < options.usernames.length; i++) {
+      const palette = OVERLAY_PALETTES[i % OVERLAY_PALETTES.length];
+      // Username label
+      legendElements.push(
+        `<text x="${xOffset}" y="${legendY + CELL_SIZE}" fill="${theme.text}" font-size="9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">${escapeXml(options.usernames[i])}</text>`
+      );
+      xOffset += options.usernames[i].length * 5.5 + 6;
+      // Color swatches for this user
+      const userColors = [theme.empty, ...palette.levels];
+      for (let j = 0; j < userColors.length; j++) {
+        legendElements.push(
+          `<rect x="${xOffset + j * CELL_STEP}" y="${legendY}" width="${CELL_SIZE}" height="${CELL_SIZE}" rx="${CORNER_RADIUS}" ry="${CORNER_RADIUS}" fill="${userColors[j]}"/>`
+        );
+      }
+      xOffset += userColors.length * CELL_STEP + 12;
+    }
+  } else {
+    // Sum mode: single "Less...More" legend with theme colors
     legendElements.push(
-      `<rect x="${legendStartX + i * CELL_STEP}" y="${legendY}" width="${CELL_SIZE}" height="${CELL_SIZE}" rx="${CORNER_RADIUS}" ry="${CORNER_RADIUS}" fill="${legendColors[i]}"/>`
+      `<text x="${PADDING + LABEL_AREA_X}" y="${legendY + CELL_SIZE}" fill="${theme.text}" font-size="9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">Less</text>`
+    );
+
+    const legendStartX = PADDING + LABEL_AREA_X + 30;
+    const legendColors = [theme.empty, ...theme.levels];
+    for (let i = 0; i < legendColors.length; i++) {
+      legendElements.push(
+        `<rect x="${legendStartX + i * CELL_STEP}" y="${legendY}" width="${CELL_SIZE}" height="${CELL_SIZE}" rx="${CORNER_RADIUS}" ry="${CORNER_RADIUS}" fill="${legendColors[i]}"/>`
+      );
+    }
+
+    legendElements.push(
+      `<text x="${legendStartX + legendColors.length * CELL_STEP + 4}" y="${legendY + CELL_SIZE}" fill="${theme.text}" font-size="9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">More</text>`
     );
   }
 
-  legendElements.push(
-    `<text x="${legendStartX + legendColors.length * CELL_STEP + 4}" y="${legendY + CELL_SIZE}" fill="${theme.text}" font-size="9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">More</text>`
-  );
-
-  // Username labels (for overlay mode or multi-user)
+  // Username labels (for sum mode with multiple users)
   const userLabelElements: string[] = [];
-  if (showUsersLabel && options.usernames.length > 1) {
+  if (options.mode !== 'overlay' && showUsersLabel && options.usernames.length > 1) {
     const userY = legendY + LEGEND_HEIGHT;
     let xOffset = PADDING + LABEL_AREA_X;
     for (let i = 0; i < options.usernames.length; i++) {
-      const palette = options.mode === 'overlay'
-        ? OVERLAY_PALETTES[i % OVERLAY_PALETTES.length]
-        : { levels: theme.levels };
       userLabelElements.push(
-        `<rect x="${xOffset}" y="${userY - 8}" width="${CELL_SIZE}" height="${CELL_SIZE}" rx="${CORNER_RADIUS}" ry="${CORNER_RADIUS}" fill="${palette.levels[2]}"/>` +
+        `<rect x="${xOffset}" y="${userY - 8}" width="${CELL_SIZE}" height="${CELL_SIZE}" rx="${CORNER_RADIUS}" ry="${CORNER_RADIUS}" fill="${theme.levels[2]}"/>` +
           `<text x="${xOffset + CELL_SIZE + 4}" y="${userY + 2}" fill="${theme.text}" font-size="10" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">${escapeXml(options.usernames[i])}</text>`
       );
       xOffset += CELL_SIZE + 8 + options.usernames[i].length * 6.5;
