@@ -1,24 +1,110 @@
-# GitHub Contribution Merger
+<div align="center">
 
-Merge GitHub contribution graphs from multiple users into a single SVG heatmap. Deploy as a serverless function on Vercel.
+# GitHub Readme Contribution Merger
 
-## Interactive Link Builder
+### Combine multiple GitHub contribution graphs into one embeddable SVG heatmap
 
-Visit the landing page at your deployment URL to build embed links visually — pick usernames, modes, colors, and preview the result before copying.
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-4ade80?style=for-the-badge&logo=vercel&logoColor=white)](https://github-readme-contribution-merger.vercel.app)
+[![GitHub Stars](https://img.shields.io/github/stars/apoorvdarshan/github-readme-contribution-merger?style=for-the-badge&logo=github&color=39d353)](https://github.com/apoorvdarshan/github-readme-contribution-merger/stargazers)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 
-## Usage
+<br>
 
-Embed in any Markdown file or HTML page:
+![Merged Contribution Graph](https://github-readme-contribution-merger.vercel.app/api/merge?users=torvalds,gvanrossum&colors=39d353,58a6ff&mode=overlay)
 
+*Torvalds + Van Rossum — overlay mode with custom colors*
+
+</div>
+
+---
+
+## What is this?
+
+A **free, open-source tool** that fetches GitHub contribution data for multiple users, merges it, and renders a combined **SVG heatmap** you can embed directly in your GitHub README, profile, or any Markdown/HTML page.
+
+**No signup required. No API keys for end users. Just paste a URL.**
+
+### Key Features
+
+- **Merge multiple users** — combine 2-10 GitHub contribution graphs into one
+- **Sum & Overlay modes** — total contributions or color-coded per user
+- **Custom colors** — pick any hex color, auto-generates 4 intensity levels
+- **8 built-in themes** — github, github-dark, blue, purple, orange + dark variants
+- **Interactive builder** — visual UI to configure and preview before copying
+- **Instant embed** — copy Markdown/HTML snippets, paste into your README
+- **Serverless** — deploys on Vercel with zero config
+- **Fast** — 3-layer caching (CDN + in-memory SVG + per-user data), 5-min TTL
+
+---
+
+## Quick Start
+
+### 1. Use the Interactive Builder (Recommended)
+
+Visit **[github-readme-contribution-merger.vercel.app](https://github-readme-contribution-merger.vercel.app)** to build your embed link visually — pick usernames, modes, colors, and preview the result before copying.
+
+### 2. Or paste a URL directly
+
+**Markdown:**
 ```markdown
-![Contributions](https://your-deployment.vercel.app/api/merge?users=torvalds,gvanrossum)
+![Contributions](https://github-readme-contribution-merger.vercel.app/api/merge?users=YOUR_USERNAME,FRIEND_USERNAME)
 ```
 
+**HTML:**
 ```html
-<img src="https://your-deployment.vercel.app/api/merge?users=torvalds,gvanrossum" alt="Merged contributions" />
+<img src="https://github-readme-contribution-merger.vercel.app/api/merge?users=YOUR_USERNAME,FRIEND_USERNAME" alt="Merged GitHub contributions" />
 ```
 
-## API
+---
+
+## Examples
+
+<table>
+<tr>
+<td align="center"><strong>Sum Mode (default)</strong></td>
+<td align="center"><strong>Overlay Mode</strong></td>
+</tr>
+<tr>
+<td>
+
+```
+/api/merge?users=torvalds,gvanrossum
+```
+
+</td>
+<td>
+
+```
+/api/merge?users=torvalds,gvanrossum&mode=overlay
+```
+
+</td>
+</tr>
+<tr>
+<td align="center"><strong>Custom Colors</strong></td>
+<td align="center"><strong>Dark Theme</strong></td>
+</tr>
+<tr>
+<td>
+
+```
+/api/merge?users=torvalds,gvanrossum&colors=ff6b6b,4ecdc4
+```
+
+</td>
+<td>
+
+```
+/api/merge?users=torvalds,gvanrossum&theme=github-dark
+```
+
+</td>
+</tr>
+</table>
+
+---
+
+## API Reference
 
 ### `GET /api/merge`
 
@@ -35,7 +121,7 @@ Returns an SVG image of the merged contribution graph.
 | `colors` | No | — | Comma-separated 6-char hex colors (no `#`), one per user. Overrides `theme`. |
 | `bg` | No | `dark` | Background mode when using `colors`: `light` or `dark` |
 
-*Provide either `users` or `user1`+`user2`+... At least 2 usernames are required (max 10).
+*Provide either `users` or `user1`+`user2`+... At least 2 usernames required (max 10).
 
 ### Custom Colors
 
@@ -48,57 +134,17 @@ Use the `colors` param to specify your own hex colors instead of a preset theme.
 
 ### Themes
 
-**Sum mode** — all themes available:
-
 | Theme | Style | Description |
 |-------|-------|-------------|
 | `github` | Light | Classic light green (default) |
 | `github-dark` | Dark | Dark mode green |
-| `blue` | Light | Blue scale |
-| `blue-dark` | Dark | Blue scale on dark background |
-| `purple` | Light | Purple scale |
-| `purple-dark` | Dark | Purple scale on dark background |
-| `orange` | Light | Orange scale |
-| `orange-dark` | Dark | Orange scale on dark background |
+| `blue` / `blue-dark` | Light / Dark | Blue scale |
+| `purple` / `purple-dark` | Light / Dark | Purple scale |
+| `orange` / `orange-dark` | Light / Dark | Orange scale |
 
-**Overlay mode** — only `github` and dark themes (`github-dark`, `blue-dark`, `purple-dark`, `orange-dark`) are supported. Each user is automatically assigned a distinct color palette (green, blue, orange, etc.) so contributors are visually distinguishable. Other theme values are ignored and fall back to `github`.
+> **Overlay mode** supports only `github` and dark themes. Each user is auto-assigned a distinct color palette so contributors are visually distinguishable.
 
-### Examples
-
-Sum mode (default):
-```
-/api/merge?users=torvalds,gvanrossum&theme=purple
-```
-
-Sum mode with dark theme:
-```
-/api/merge?users=torvalds,gvanrossum&theme=github-dark
-```
-
-Overlay mode (each user gets a distinct color):
-```
-/api/merge?users=torvalds,gvanrossum&mode=overlay
-```
-
-Overlay mode with dark background:
-```
-/api/merge?users=torvalds,gvanrossum&mode=overlay&theme=github-dark
-```
-
-Using individual params:
-```
-/api/merge?user1=torvalds&user2=gvanrossum&mode=overlay
-```
-
-Custom colors (dark background):
-```
-/api/merge?users=torvalds,gvanrossum&colors=ff6b6b,4ecdc4&bg=dark
-```
-
-Custom colors in overlay mode (light background):
-```
-/api/merge?users=torvalds,gvanrossum&mode=overlay&colors=58a6ff,f47067&bg=light
-```
+---
 
 ## Self-Hosting
 
@@ -110,18 +156,14 @@ Custom colors in overlay mode (light background):
 ### Setup
 
 ```bash
-# Clone the repository
 git clone https://github.com/apoorvdarshan/github-readme-contribution-merger.git
 cd github-readme-contribution-merger
-
-# Install dependencies
 npm install
 
-# Copy environment file and add your GitHub token
+# Add your GitHub token
 cp .env.example .env
-# Edit .env and set GITHUB_TOKEN=ghp_your_token_here
+# Edit .env → GITHUB_TOKEN=ghp_your_token_here
 
-# Run locally
 npx vercel dev
 ```
 
@@ -129,8 +171,10 @@ npx vercel dev
 
 1. Push the repo to GitHub
 2. Import the project in [Vercel](https://vercel.com)
-3. Add `GITHUB_TOKEN` as an environment variable in project settings
-4. Deploy
+3. Add `GITHUB_TOKEN` as an environment variable
+4. Deploy — done!
+
+---
 
 ## How It Works
 
@@ -139,6 +183,39 @@ npx vercel dev
 3. Renders a GitHub-style SVG heatmap with month/day labels, tooltips, and a legend
 4. Caches responses at multiple levels (Vercel CDN, in-memory SVG, in-memory per-user data) with 5-minute TTL
 
-## License
+### Tech Stack
 
-MIT
+- **Runtime**: Node.js 18+ (serverless on Vercel)
+- **Language**: TypeScript
+- **Dependencies**: Zero external runtime deps (only `@vercel/node`)
+- **Frontend**: Single HTML file, zero frameworks, pure CSS/JS
+
+---
+
+## Contributing
+
+Contributions are welcome! Feel free to open issues or submit pull requests.
+
+If you find this useful, please give it a **star** — it helps others discover the project.
+
+---
+
+## Support
+
+If this tool helped you, consider supporting its development:
+
+[![PayPal](https://img.shields.io/badge/PayPal-Support-009de0?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/apoorvdarshan)
+
+---
+
+<div align="center">
+
+Made by [Apoorv Darshan](https://github.com/apoorvdarshan)
+
+[![GitHub](https://img.shields.io/badge/GitHub-apoorvdarshan-181717?style=flat-square&logo=github)](https://github.com/apoorvdarshan)
+[![Twitter](https://img.shields.io/badge/Twitter-@apoorvdarshan-1da1f2?style=flat-square&logo=x)](https://x.com/apoorvdarshan)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-apoorvdarshan-0a66c2?style=flat-square&logo=linkedin)](https://linkedin.com/in/apoorvdarshan)
+
+**MIT License**
+
+</div>
