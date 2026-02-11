@@ -13,7 +13,6 @@
 
     :root {
       --glass-bg: rgba(255,255,255,0.03);
-      --glass-bg-hover: rgba(255,255,255,0.05);
       --glass-border: rgba(255,255,255,0.08);
       --glass-border-hover: rgba(255,255,255,0.14);
       --glass-highlight: rgba(255,255,255,0.06);
@@ -95,22 +94,13 @@
       0% { box-shadow: 0 0 0 0 rgba(74,222,128,0.4); }
       100% { box-shadow: 0 0 0 6px rgba(74,222,128,0); }
     }
-@keyframes focus-breathe {
+    @keyframes focus-breathe {
       0%,100% { box-shadow: 0 0 0 3px rgba(96,165,250,0.08), inset 0 0 0 1px rgba(96,165,250,0.1); }
       50% { box-shadow: 0 0 0 5px rgba(96,165,250,0.12), inset 0 0 0 1px rgba(96,165,250,0.15); }
     }
     @keyframes btn-glow-breathe {
       0%,100% { box-shadow: 0 1px 4px rgba(0,0,0,0.15), inset 0 1px 0 rgba(74,222,128,0.1), 0 0 12px rgba(74,222,128,0.05); }
       50% { box-shadow: 0 1px 4px rgba(0,0,0,0.15), inset 0 1px 0 rgba(74,222,128,0.1), 0 0 20px rgba(74,222,128,0.1); }
-    }
-    @keyframes swatch-glow-ring {
-      0% { box-shadow: 0 0 0 0 currentColor; }
-      50% { box-shadow: 0 0 0 4px transparent; }
-      100% { box-shadow: 0 0 0 1.5px var(--text-primary), 0 0 12px rgba(255,255,255,0.1); }
-    }
-    @keyframes social-float {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-2px); }
     }
     @keyframes heartbeat {
       0%,100% { transform: scale(1); }
@@ -123,30 +113,9 @@
       0%,100% { opacity: 0.5; background-position: 0% 0; }
       50% { opacity: 1; background-position: 100% 0; }
     }
-    @keyframes social-orbit {
-      0%,100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
-      50% { box-shadow: 0 0 20px 2px rgba(255,255,255,0.05); }
-    }
-    @keyframes remove-wiggle {
-      0%,100% { transform: rotate(0deg); }
-      25% { transform: rotate(-8deg); }
-      75% { transform: rotate(8deg); }
-    }
     @keyframes preview-reveal {
       from { opacity: 0; transform: scaleY(0.96); }
       to { opacity: 1; transform: scaleY(1); }
-    }
-
-    /* ── Glass mixin (via class) ── */
-    .glass {
-      background: var(--glass-bg);
-      -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-      backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-      border: 1px solid var(--glass-border);
-      box-shadow:
-        0 2px 16px rgba(0,0,0,0.25),
-        0 0 1px rgba(255,255,255,0.1),
-        inset 0 1px 0 var(--glass-highlight);
     }
 
     /* ── Header ── */
@@ -258,7 +227,7 @@
       pointer-events: none;
       z-index: 1;
     }
-.card:nth-child(1) { animation-delay: 0.06s; }
+    .card:nth-child(1) { animation-delay: 0.06s; }
     .card:nth-child(2) { animation-delay: 0.12s; z-index: 10; }
     .card:nth-child(3) { animation-delay: 0.18s; }
     .card:nth-child(4) { animation-delay: 0.24s; }
@@ -559,7 +528,7 @@
       border: 1px solid rgba(255,255,255,0.06);
       border-radius: var(--radius-xs);
       padding: 0.5rem 0.75rem;
-      font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+      font-family: inherit;
       font-size: 0.72rem;
       color: var(--accent-green);
       overflow-x: auto;
@@ -630,7 +599,7 @@
       border: 1px solid rgba(255,255,255,0.06);
       border-radius: var(--radius-xs);
       padding: 0.4rem 0.65rem;
-      font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+      font-family: inherit;
       font-size: 0.68rem;
       color: var(--text-tertiary);
       overflow-x: auto;
@@ -746,45 +715,21 @@
       transition: opacity 0.3s ease;
       pointer-events: none;
     }
-    .social-link.gh::after { background: radial-gradient(circle at center, rgba(255,255,255,0.08), transparent 70%); }
-    .social-link.x::after { background: radial-gradient(circle at center, rgba(255,255,255,0.08), transparent 70%); }
-    .social-link.li::after { background: radial-gradient(circle at center, rgba(255,255,255,0.08), transparent 70%); }
-    .social-link.pp::after { background: radial-gradient(circle at center, rgba(255,255,255,0.08), transparent 70%); }
+    .social-link::after { background: radial-gradient(circle at center, rgba(255,255,255,0.08), transparent 70%); }
     .social-link:hover {
+      color: var(--text-primary);
       transform: translateY(-4px) scale(1.1);
       text-decoration: none;
       border-color: rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 16px rgba(255,255,255,0.04);
     }
     .social-link:hover::after { opacity: 1; }
     .social-link:active {
       transform: translateY(0) scale(0.92);
       transition: transform 0.08s ease;
     }
-    .social-link.gh:hover {
-      color: var(--text-primary);
-      background: rgba(255,255,255,0.06);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 16px rgba(255,255,255,0.04);
-    }
-    .social-link.x:hover {
-      color: var(--text-primary);
-      background: rgba(255,255,255,0.06);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 16px rgba(255,255,255,0.04);
-    }
-    .social-link.li:hover {
-      color: var(--text-primary);
-      background: rgba(255,255,255,0.06);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 16px rgba(255,255,255,0.04);
-    }
-    .social-link.pp:hover {
-      color: var(--text-primary);
-      background: rgba(255,255,255,0.06);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 16px rgba(255,255,255,0.04);
-    }
     .social-link svg { width: 17px; height: 17px; fill: currentColor; display: block; }
-    .social-link:nth-child(1) { animation: social-orbit 4s ease-in-out infinite; }
-    .social-link:nth-child(2) { animation: social-orbit 4s ease-in-out 1s infinite; }
-    .social-link:nth-child(3) { animation: social-orbit 4s ease-in-out 2s infinite; }
-    .social-link:nth-child(4) { animation: social-orbit 4s ease-in-out 3s infinite; }
 
     /* Made by line */
     .footer-made {
@@ -848,10 +793,6 @@
     }
     .footer-link svg { width: 12px; height: 12px; fill: currentColor; flex-shrink: 0; opacity: 0.6; }
     .footer-link:hover svg { opacity: 1; }
-    .footer-link.source:hover { color: var(--text-secondary); }
-    .footer-link.source:hover svg { fill: var(--text-secondary); }
-    .footer-link.donate:hover { color: var(--text-secondary); }
-    .footer-link.donate:hover svg { fill: var(--text-secondary); }
 
     /* ── Responsive ── */
     @media (max-width: 600px) {
