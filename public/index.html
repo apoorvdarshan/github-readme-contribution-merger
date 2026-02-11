@@ -1083,6 +1083,10 @@
       const fullUrl = window.location.origin + url;
       document.getElementById('snippet-md').textContent = `![Contributions](${fullUrl})`;
       document.getElementById('snippet-html').textContent = `<img src="${fullUrl}" alt="Merged contributions" />`;
+
+      // Auto-refresh preview if already visible
+      const preview = document.getElementById('preview-area');
+      if (preview.classList.contains('visible')) loadPreview();
     }
 
     function copyText(elementId, btn) {
