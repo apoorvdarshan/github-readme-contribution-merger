@@ -94,7 +94,7 @@ function getMonthLabels(weeks: WeekColumn[]): Array<{ label: string; x: number }
 }
 
 export function renderSvg(days: MergedDay[], options: RenderOptions): string {
-  const theme = getTheme(options.theme);
+  const theme = options.customTheme ?? getTheme(options.theme);
   const weeks = organizeIntoWeeks(days);
   const monthLabels = getMonthLabels(weeks);
 
@@ -145,7 +145,9 @@ export function renderSvg(days: MergedDay[], options: RenderOptions): string {
           }
         }
         const userIndex = options.usernames.indexOf(dominantUser);
-        const palette = OVERLAY_PALETTES[userIndex % OVERLAY_PALETTES.length];
+        const palette = options.customPalettes
+          ? options.customPalettes[userIndex % options.customPalettes.length]
+          : OVERLAY_PALETTES[userIndex % OVERLAY_PALETTES.length];
         const level = getContributionLevel(dominantCount, maxPerUser[dominantUser] ?? 1);
         fill = level === 0 ? theme.empty : palette.levels[level - 1];
       } else {
@@ -192,7 +194,9 @@ export function renderSvg(days: MergedDay[], options: RenderOptions): string {
     // Overlay mode: show per-user color scales
     let xOffset = PADDING + LABEL_AREA_X;
     for (let i = 0; i < options.usernames.length; i++) {
-      const palette = OVERLAY_PALETTES[i % OVERLAY_PALETTES.length];
+      const palette = options.customPalettes
+        ? options.customPalettes[i % options.customPalettes.length]
+        : OVERLAY_PALETTES[i % OVERLAY_PALETTES.length];
       // Username label
       legendElements.push(
         `<text x="${xOffset}" y="${legendY + CELL_SIZE}" fill="${theme.text}" font-size="9" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">${escapeXml(options.usernames[i])}</text>`

@@ -1,5 +1,91 @@
 import type { ThemeColors, OverlayPalette } from './types';
 
+// Default custom color palette for auto-fill when fewer colors than users
+export const DEFAULT_CUSTOM_COLORS = [
+  '39d353', '58a6ff', 'bc8cff', 'e3b341', 'f47067',
+  'db61a2', '3fb950', '79c0ff', 'd2a8ff', 'f0883e',
+];
+
+function hexToHsl(hex: string): [number, number, number] {
+  const r = parseInt(hex.slice(0, 2), 16) / 255;
+  const g = parseInt(hex.slice(2, 4), 16) / 255;
+  const b = parseInt(hex.slice(4, 6), 16) / 255;
+
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const l = (max + min) / 2;
+
+  if (max === min) return [0, 0, l * 100];
+
+  const d = max - min;
+  const s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+  let h: number;
+  if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+  else if (max === g) h = ((b - r) / d + 2) / 6;
+  else h = ((r - g) / d + 4) / 6;
+
+  return [h * 360, s * 100, l * 100];
+}
+
+function hslToHex(h: number, s: number, l: number): string {
+  h /= 360;
+  s /= 100;
+  l /= 100;
+
+  let r: number, g: number, b: number;
+  if (s === 0) {
+    r = g = b = l;
+  } else {
+    const hue2rgb = (p: number, q: number, t: number): number => {
+      if (t < 0) t += 1;
+      if (t > 1) t -= 1;
+      if (t < 1 / 6) return p + (q - p) * 6 * t;
+      if (t < 1 / 2) return q;
+      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+      return p;
+    };
+    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    const p = 2 * l - q;
+    r = hue2rgb(p, q, h + 1 / 3);
+    g = hue2rgb(p, q, h);
+    b = hue2rgb(p, q, h - 1 / 3);
+  }
+
+  const toHex = (n: number) => Math.round(n * 255).toString(16).padStart(2, '0');
+  return `${toHex(r)}${toHex(g)}${toHex(b)}`;
+}
+
+// Generate 4 intensity levels from a base color
+export function generateLevels(baseHex: string, dark: boolean): [string, string, string, string] {
+  const [h, s] = hexToHsl(baseHex);
+  if (dark) {
+    return [`#${hslToHex(h, s, 15)}`, `#${hslToHex(h, s, 30)}`, `#${hslToHex(h, s, 50)}`, `#${hslToHex(h, s, 65)}`];
+  }
+  return [`#${hslToHex(h, s, 85)}`, `#${hslToHex(h, s, 65)}`, `#${hslToHex(h, s, 45)}`, `#${hslToHex(h, s, 30)}`];
+}
+
+// Build a full ThemeColors from a single hex + light/dark mode
+export function buildCustomTheme(baseHex: string, dark: boolean): ThemeColors {
+  const levels = generateLevels(baseHex, dark);
+  if (dark) {
+    return {
+      empty: '#161b22',
+      levels,
+      text: '#c9d1d9',
+      background: '#0d1117',
+      border: '#30363d',
+    };
+  }
+  return {
+    empty: '#ebedf0',
+    levels,
+    text: '#24292f',
+    background: '#ffffff',
+    border: '#d0d7de',
+  };
+}
+
 const THEMES: Record<string, ThemeColors> = {
   github: {
     empty: '#ebedf0',

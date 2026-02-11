@@ -6,33 +6,410 @@
   <title>GitHub Contribution Merger</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; background: #0d1117; color: #c9d1d9; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 2rem; }
-    .container { max-width: 720px; text-align: center; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; background: #0d1117; color: #c9d1d9; min-height: 100vh; padding: 2rem; display: flex; justify-content: center; }
+    .container { max-width: 760px; width: 100%; }
     h1 { font-size: 2rem; margin-bottom: 0.5rem; color: #f0f6fc; }
-    p { margin-bottom: 1.5rem; color: #8b949e; line-height: 1.6; }
-    code { background: #161b22; padding: 0.2em 0.5em; border-radius: 6px; font-size: 0.9em; color: #79c0ff; }
-    .example { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; text-align: left; }
-    .example code { display: block; margin-top: 0.5rem; white-space: nowrap; overflow-x: auto; }
+    .subtitle { color: #8b949e; margin-bottom: 2rem; line-height: 1.6; }
     a { color: #58a6ff; text-decoration: none; }
     a:hover { text-decoration: underline; }
+
+    /* Sections */
+    .section { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; }
+    .section-title { font-size: 0.85rem; font-weight: 600; color: #8b949e; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
+
+    /* User inputs */
+    .user-row { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center; }
+    .user-row input[type="text"] { flex: 1; background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; border-radius: 6px; padding: 0.5rem 0.75rem; font-size: 0.9rem; outline: none; }
+    .user-row input[type="text"]:focus { border-color: #58a6ff; }
+    .user-row input[type="text"]::placeholder { color: #484f58; }
+    .btn-remove { background: none; border: 1px solid #30363d; color: #f85149; border-radius: 6px; width: 32px; height: 32px; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; }
+    .btn-remove:hover { background: #da36331a; border-color: #f85149; }
+    .btn-add { background: none; border: 1px solid #30363d; color: #58a6ff; border-radius: 6px; padding: 0.4rem 0.75rem; cursor: pointer; font-size: 0.85rem; }
+    .btn-add:hover { background: #388bfd1a; border-color: #58a6ff; }
+
+    /* Radio / checkbox groups */
+    .option-group { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+    .option-group label { display: flex; align-items: center; gap: 0.35rem; cursor: pointer; font-size: 0.9rem; }
+    .option-group input[type="radio"], .option-group input[type="checkbox"] { accent-color: #58a6ff; }
+
+    /* Select */
+    select { background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; border-radius: 6px; padding: 0.5rem 0.75rem; font-size: 0.9rem; outline: none; cursor: pointer; }
+    select:focus { border-color: #58a6ff; }
+
+    /* Custom colors section */
+    .custom-colors { margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid #30363d; display: none; }
+    .custom-colors.visible { display: block; }
+    .bg-toggle { margin-bottom: 0.75rem; }
+    .color-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
+    .color-row .color-label { font-size: 0.85rem; color: #8b949e; min-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .color-row input[type="color"] { width: 32px; height: 32px; border: 1px solid #30363d; border-radius: 6px; background: #0d1117; cursor: pointer; padding: 2px; }
+    .color-row input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+    .color-row input[type="color"]::-webkit-color-swatch { border: none; border-radius: 4px; }
+    .color-hex { background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; border-radius: 6px; padding: 0.3rem 0.5rem; font-size: 0.8rem; width: 75px; font-family: monospace; outline: none; }
+    .color-hex:focus { border-color: #58a6ff; }
+    .swatches { display: flex; gap: 4px; }
+    .swatch { width: 20px; height: 20px; border-radius: 4px; border: 1px solid #30363d; cursor: pointer; transition: transform 0.1s; }
+    .swatch:hover { transform: scale(1.2); border-color: #58a6ff; }
+
+    /* URL output */
+    .url-box { position: relative; }
+    .url-display { background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 0.6rem 3.5rem 0.6rem 0.75rem; font-family: monospace; font-size: 0.8rem; color: #79c0ff; overflow-x: auto; white-space: nowrap; word-break: break-all; }
+    .btn-copy { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); background: #21262d; border: 1px solid #30363d; color: #c9d1d9; border-radius: 6px; padding: 0.3rem 0.6rem; cursor: pointer; font-size: 0.75rem; }
+    .btn-copy:hover { background: #30363d; }
+    .btn-copy.copied { color: #3fb950; border-color: #3fb950; }
+
+    /* Embed snippets */
+    .snippet { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+    .snippet-label { font-size: 0.8rem; color: #8b949e; min-width: 70px; }
+    .snippet-code { flex: 1; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 0.4rem 0.6rem; font-family: monospace; font-size: 0.75rem; color: #c9d1d9; overflow-x: auto; white-space: nowrap; position: relative; }
+    .snippet-box { position: relative; flex: 1; }
+    .snippet-box .btn-copy { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); }
+    .snippet-box .snippet-code { padding-right: 3.5rem; }
+
+    /* Preview */
+    .btn-preview { background: #238636; border: 1px solid #2ea043; color: #fff; border-radius: 6px; padding: 0.5rem 1rem; cursor: pointer; font-size: 0.9rem; font-weight: 500; width: 100%; }
+    .btn-preview:hover { background: #2ea043; }
+    .btn-preview:disabled { opacity: 0.6; cursor: not-allowed; }
+    .preview-container { margin-top: 0.75rem; border: 1px solid #30363d; border-radius: 6px; padding: 1rem; background: #0d1117; overflow-x: auto; display: none; text-align: center; }
+    .preview-container.visible { display: block; }
+    .preview-container img { max-width: 100%; }
+    .preview-error { color: #f85149; font-size: 0.85rem; margin-top: 0.5rem; }
+
+    /* Footer */
+    .footer { text-align: center; margin-top: 1.5rem; color: #8b949e; font-size: 0.85rem; }
+
+    /* Row for mode + theme */
+    .inline-options { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+    .inline-options > div { display: flex; align-items: center; gap: 0.5rem; }
+    .inline-options .label { font-size: 0.85rem; color: #8b949e; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>GitHub Contribution Merger</h1>
-    <p>Merge contribution graphs from multiple GitHub users into a single SVG heatmap.</p>
-    <div class="example">
-      <strong>Usage</strong>
-      <code>/api/merge?users=torvalds,gvanrossum</code>
+    <p class="subtitle">Merge contribution graphs from multiple GitHub users into a single SVG heatmap.</p>
+
+    <!-- Usernames -->
+    <div class="section">
+      <div class="section-title">Usernames</div>
+      <div id="user-list">
+        <div class="user-row">
+          <input type="text" placeholder="github username" value="" data-index="0" />
+          <button class="btn-remove" title="Remove" onclick="removeUser(this)">&times;</button>
+        </div>
+        <div class="user-row">
+          <input type="text" placeholder="github username" value="" data-index="1" />
+          <button class="btn-remove" title="Remove" onclick="removeUser(this)">&times;</button>
+        </div>
+      </div>
+      <button class="btn-add" id="btn-add-user" onclick="addUser()">+ Add user</button>
     </div>
-    <div class="example">
-      <strong>Overlay mode</strong>
-      <code>/api/merge?users=torvalds,gvanrossum&amp;mode=overlay&amp;theme=github-dark</code>
+
+    <!-- Mode & Theme -->
+    <div class="section">
+      <div class="inline-options">
+        <div>
+          <span class="label">Mode:</span>
+          <div class="option-group">
+            <label><input type="radio" name="mode" value="sum" checked /> Sum</label>
+            <label><input type="radio" name="mode" value="overlay" /> Overlay</label>
+          </div>
+        </div>
+        <div id="theme-group">
+          <span class="label">Theme:</span>
+          <select id="theme-select">
+            <option value="github">github</option>
+            <option value="github-dark">github-dark</option>
+            <option value="blue">blue</option>
+            <option value="blue-dark">blue-dark</option>
+            <option value="purple">purple</option>
+            <option value="purple-dark">purple-dark</option>
+            <option value="orange">orange</option>
+            <option value="orange-dark">orange-dark</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-top: 0.75rem;">
+        <label class="option-group" style="display: inline-flex;">
+          <input type="checkbox" id="use-custom-colors" /> Use custom colors
+        </label>
+      </div>
+      <div class="custom-colors" id="custom-colors-section">
+        <div class="bg-toggle">
+          <span class="label" style="font-size: 0.85rem; color: #8b949e;">Background:</span>
+          <div class="option-group" style="display: inline-flex; margin-left: 0.5rem;">
+            <label><input type="radio" name="bg" value="light" /> Light</label>
+            <label><input type="radio" name="bg" value="dark" checked /> Dark</label>
+          </div>
+        </div>
+        <div id="color-pickers"></div>
+      </div>
     </div>
-    <p>
-      Params: <code>users</code> (required), <code>mode</code> (sum|overlay), <code>theme</code> (github|github-dark|blue|purple|orange)
-    </p>
-    <p><a href="https://github.com/apoorvdarshan/github-contribution-merger">View on GitHub</a></p>
+
+    <!-- Generated URL -->
+    <div class="section">
+      <div class="section-title">Generated URL</div>
+      <div class="url-box">
+        <div class="url-display" id="url-display">/api/merge?users=,</div>
+        <button class="btn-copy" onclick="copyText('url-display', this)">Copy</button>
+      </div>
+      <div style="margin-top: 0.75rem;">
+        <div class="section-title" style="margin-bottom: 0.5rem;">Embed snippets</div>
+        <div class="snippet">
+          <span class="snippet-label">Markdown:</span>
+          <div class="snippet-box">
+            <div class="snippet-code" id="snippet-md"></div>
+            <button class="btn-copy" onclick="copyText('snippet-md', this)">Copy</button>
+          </div>
+        </div>
+        <div class="snippet">
+          <span class="snippet-label">HTML:</span>
+          <div class="snippet-box">
+            <div class="snippet-code" id="snippet-html"></div>
+            <button class="btn-copy" onclick="copyText('snippet-html', this)">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Preview -->
+    <div class="section">
+      <button class="btn-preview" id="btn-preview" onclick="loadPreview()">Load Preview</button>
+      <div class="preview-container" id="preview-container"></div>
+    </div>
+
+    <div class="footer">
+      <a href="https://github.com/apoorvdarshan/github-contribution-merger">View on GitHub</a>
+    </div>
   </div>
+
+  <script>
+    const DEFAULT_CUSTOM_COLORS = [
+      '39d353', '58a6ff', 'bc8cff', 'e3b341', 'f47067',
+      'db61a2', '3fb950', '79c0ff', 'd2a8ff', 'f0883e',
+    ];
+    const MAX_USERS = 10;
+
+    function getUserInputs() {
+      return document.querySelectorAll('#user-list .user-row input[type="text"]');
+    }
+
+    function getUsernames() {
+      return Array.from(getUserInputs()).map(i => i.value.trim()).filter(Boolean);
+    }
+
+    function addUser() {
+      const list = document.getElementById('user-list');
+      const count = list.querySelectorAll('.user-row').length;
+      if (count >= MAX_USERS) return;
+
+      const row = document.createElement('div');
+      row.className = 'user-row';
+      row.innerHTML = `<input type="text" placeholder="github username" value="" data-index="${count}" /><button class="btn-remove" title="Remove" onclick="removeUser(this)">&times;</button>`;
+      list.appendChild(row);
+
+      row.querySelector('input').addEventListener('input', onInputChange);
+      updateAddButton();
+      updateColorPickers();
+      updateUrl();
+    }
+
+    function removeUser(btn) {
+      const list = document.getElementById('user-list');
+      if (list.querySelectorAll('.user-row').length <= 2) return;
+      btn.closest('.user-row').remove();
+      updateAddButton();
+      updateColorPickers();
+      updateUrl();
+    }
+
+    function updateAddButton() {
+      const count = document.querySelectorAll('#user-list .user-row').length;
+      document.getElementById('btn-add-user').style.display = count >= MAX_USERS ? 'none' : '';
+    }
+
+    function getMode() {
+      return document.querySelector('input[name="mode"]:checked').value;
+    }
+
+    function getTheme() {
+      return document.getElementById('theme-select').value;
+    }
+
+    function getBg() {
+      return document.querySelector('input[name="bg"]:checked').value;
+    }
+
+    function isCustomColors() {
+      return document.getElementById('use-custom-colors').checked;
+    }
+
+    function updateColorPickers() {
+      const container = document.getElementById('color-pickers');
+      const inputs = getUserInputs();
+      const rows = container.querySelectorAll('.color-row');
+
+      // Add or remove rows to match user count
+      while (container.children.length > inputs.length) {
+        container.lastChild.remove();
+      }
+      while (container.children.length < inputs.length) {
+        const idx = container.children.length;
+        const defaultColor = DEFAULT_CUSTOM_COLORS[idx % DEFAULT_CUSTOM_COLORS.length];
+        const row = document.createElement('div');
+        row.className = 'color-row';
+        row.dataset.colorIndex = idx;
+        row.innerHTML = buildColorRow(idx, defaultColor);
+        container.appendChild(row);
+        setupColorRowEvents(row);
+      }
+
+      // Update labels
+      for (let i = 0; i < inputs.length; i++) {
+        const row = container.children[i];
+        const label = row.querySelector('.color-label');
+        label.textContent = inputs[i].value.trim() || `User ${i + 1}`;
+      }
+    }
+
+    function buildColorRow(idx, hex) {
+      const swatchesHtml = DEFAULT_CUSTOM_COLORS.map(c =>
+        `<div class="swatch" data-color="${c}" style="background:#${c};" title="#${c}"></div>`
+      ).join('');
+      return `<span class="color-label">User ${idx + 1}</span>` +
+        `<input type="color" value="#${hex}" />` +
+        `<input type="text" class="color-hex" value="${hex}" maxlength="6" placeholder="hex" />` +
+        `<div class="swatches">${swatchesHtml}</div>`;
+    }
+
+    function setupColorRowEvents(row) {
+      const picker = row.querySelector('input[type="color"]');
+      const hex = row.querySelector('.color-hex');
+
+      picker.addEventListener('input', () => {
+        hex.value = picker.value.replace('#', '');
+        updateUrl();
+      });
+      hex.addEventListener('input', () => {
+        const v = hex.value.replace(/[^0-9a-fA-F]/g, '').slice(0, 6);
+        hex.value = v;
+        if (v.length === 6) {
+          picker.value = '#' + v;
+        }
+        updateUrl();
+      });
+      row.querySelectorAll('.swatch').forEach(sw => {
+        sw.addEventListener('click', () => {
+          const c = sw.dataset.color;
+          picker.value = '#' + c;
+          hex.value = c;
+          updateUrl();
+        });
+      });
+    }
+
+    function getCustomColors() {
+      const container = document.getElementById('color-pickers');
+      return Array.from(container.querySelectorAll('.color-hex')).map(i => i.value.toLowerCase());
+    }
+
+    function updateUrl() {
+      const usernames = getUsernames();
+      const mode = getMode();
+      const custom = isCustomColors();
+
+      const params = new URLSearchParams();
+      if (usernames.length > 0) params.set('users', usernames.join(','));
+      if (mode !== 'sum') params.set('mode', mode);
+
+      if (custom) {
+        const colors = getCustomColors().filter(c => /^[0-9a-f]{6}$/.test(c));
+        if (colors.length > 0) params.set('colors', colors.join(','));
+        const bg = getBg();
+        if (bg !== 'dark') params.set('bg', bg);
+      } else {
+        const theme = getTheme();
+        if (theme !== 'github') params.set('theme', theme);
+      }
+
+      const url = '/api/merge?' + params.toString();
+      document.getElementById('url-display').textContent = url;
+
+      const fullUrl = window.location.origin + url;
+      document.getElementById('snippet-md').textContent = `![Contributions](${fullUrl})`;
+      document.getElementById('snippet-html').textContent = `<img src="${fullUrl}" alt="Merged contributions" />`;
+    }
+
+    function copyText(elementId, btn) {
+      const text = document.getElementById(elementId).textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 1500);
+      });
+    }
+
+    function loadPreview() {
+      const url = document.getElementById('url-display').textContent;
+      const container = document.getElementById('preview-container');
+      const btn = document.getElementById('btn-preview');
+
+      btn.disabled = true;
+      btn.textContent = 'Loading...';
+      container.classList.add('visible');
+      container.innerHTML = '';
+
+      const img = document.createElement('img');
+      img.src = url;
+      img.alt = 'Contribution graph preview';
+      img.onload = () => {
+        btn.disabled = false;
+        btn.textContent = 'Load Preview';
+      };
+      img.onerror = () => {
+        container.innerHTML = '<div class="preview-error">Failed to load preview. Check usernames and try again.</div>';
+        btn.disabled = false;
+        btn.textContent = 'Load Preview';
+      };
+      container.appendChild(img);
+    }
+
+    function onInputChange() {
+      updateColorPickers();
+      updateUrl();
+    }
+
+    // Event listeners
+    document.querySelectorAll('#user-list input[type="text"]').forEach(i => {
+      i.addEventListener('input', onInputChange);
+    });
+    document.querySelectorAll('input[name="mode"]').forEach(r => {
+      r.addEventListener('change', updateUrl);
+    });
+    document.getElementById('theme-select').addEventListener('change', updateUrl);
+    document.getElementById('use-custom-colors').addEventListener('change', () => {
+      const section = document.getElementById('custom-colors-section');
+      const themeGroup = document.getElementById('theme-group');
+      if (isCustomColors()) {
+        section.classList.add('visible');
+        themeGroup.style.display = 'none';
+        updateColorPickers();
+      } else {
+        section.classList.remove('visible');
+        themeGroup.style.display = '';
+      }
+      updateUrl();
+    });
+    document.querySelectorAll('input[name="bg"]').forEach(r => {
+      r.addEventListener('change', updateUrl);
+    });
+
+    // Initial
+    updateColorPickers();
+    updateUrl();
+  </script>
 </body>
 </html>

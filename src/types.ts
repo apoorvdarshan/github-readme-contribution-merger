@@ -62,4 +62,6 @@ export interface RenderOptions {
   mode: MergeMode;
   theme: string;
   usernames: string[];
+  customPalettes?: OverlayPalette[];  // per-user custom palettes (overlay)
+  customTheme?: ThemeColors;          // custom theme (for bg/text/empty + sum levels)
 }

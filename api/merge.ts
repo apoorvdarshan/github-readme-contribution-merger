@@ -4,9 +4,10 @@ import { fetchMultipleUsers } from '../src/github';
 import { mergeContributions } from '../src/merger';
 import { renderSvg, renderErrorSvg } from '../src/svg';
 import { cacheGet, cacheSet } from '../src/cache';
-import { THEME_NAMES } from '../src/themes';
+import { THEME_NAMES, DEFAULT_CUSTOM_COLORS, buildCustomTheme, generateLevels } from '../src/themes';
 
 const USERNAME_REGEX = /^[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?$/;
+const HEX_COLOR_REGEX = /^[0-9a-fA-F]{6}$/;
 const MAX_USERS = 10;
 const VALID_MODES: MergeMode[] = ['sum', 'overlay'];
 
@@ -87,14 +88,31 @@ export default async function handler(
     ? (modeParam as MergeMode)
     : 'sum';
 
+  // Parse custom colors
+  const colorsParam = Array.isArray(req.query.colors) ? req.query.colors[0] : req.query.colors;
+  const bgParam = Array.isArray(req.query.bg) ? req.query.bg[0] : req.query.bg;
+  const isDark = bgParam !== 'light';
+
+  let customColors: string[] | undefined;
+  if (colorsParam) {
+    const rawColors = colorsParam.split(',').map((c) => c.trim()).filter(Boolean);
+    for (const color of rawColors) {
+      if (!HEX_COLOR_REGEX.test(color)) {
+        respondSvg(res, renderErrorSvg(`Invalid hex color: "${color}". Use 6-char hex without #.`), 400);
+        return;
+      }
+    }
+    customColors = rawColors;
+  }
+
   // Parse theme — in overlay mode, only dark themes are allowed
   const themeParam = Array.isArray(req.query.theme) ? req.query.theme[0] : req.query.theme;
   const OVERLAY_THEMES = ['github', 'github-dark', 'blue-dark', 'purple-dark', 'orange-dark'];
   const allowedThemes = mode === 'overlay' ? OVERLAY_THEMES : THEME_NAMES;
   const theme = allowedThemes.includes(themeParam ?? '') ? themeParam! : 'github';
 
-  // Check SVG cache
-  const svgCacheKey = `svg:${usernames.join(',')}:${mode}:${theme}`;
+  // Check SVG cache (include colors and bg in key)
+  const svgCacheKey = `svg:${usernames.join(',')}:${mode}:${theme}:${customColors?.join(',') ?? ''}:${bgParam ?? ''}`;
   const cachedSvg = cacheGet<string>(svgCacheKey);
   if (cachedSvg) {
     respondSvg(res, cachedSvg);
@@ -110,13 +128,38 @@ export default async function handler(
     return;
   }
 
-  // Merge and render
-  const merged = mergeContributions(fulfilled);
-  const svg = renderSvg(merged, {
+  // Build render options
+  const fulfilledUsernames = fulfilled.map((u) => u.username);
+  const renderOptions: import('../src/types').RenderOptions = {
     mode,
     theme,
-    usernames: fulfilled.map((u) => u.username),
-  });
+    usernames: fulfilledUsernames,
+  };
+
+  if (customColors) {
+    // Auto-fill missing colors from default palette
+    const allColors = [...customColors];
+    for (let i = allColors.length; i < fulfilledUsernames.length; i++) {
+      allColors.push(DEFAULT_CUSTOM_COLORS[i % DEFAULT_CUSTOM_COLORS.length]);
+    }
+
+    // Build custom theme for background/text/empty/border
+    renderOptions.customTheme = buildCustomTheme(allColors[0], isDark);
+
+    if (mode === 'overlay') {
+      // Each user gets their own palette
+      renderOptions.customPalettes = fulfilledUsernames.map((_, i) => ({
+        levels: generateLevels(allColors[i], isDark),
+      }));
+    } else {
+      // Sum mode: first color's levels
+      renderOptions.customTheme.levels = generateLevels(allColors[0], isDark);
+    }
+  }
+
+  // Merge and render
+  const merged = mergeContributions(fulfilled);
+  const svg = renderSvg(merged, renderOptions);
 
   cacheSet(svgCacheKey, svg);
   respondSvg(res, svg);

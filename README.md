@@ -28,6 +28,8 @@ Returns an SVG image of the merged contribution graph.
 | `user1`, `user2`, ... | Yes* | — | Alternative: individual username params |
 | `mode` | No | `sum` | `sum` — combined total; `overlay` — color by dominant contributor |
 | `theme` | No | `github` | Color theme (see below) |
+| `colors` | No | — | Comma-separated hex colors (no `#`), one per user (overrides `theme`) |
+| `bg` | No | `dark` | Background mode when using `colors`: `light` or `dark` |
 
 *Provide either `users` or `user1`+`user2`+... At least 2 usernames are required (max 10).
 
@@ -73,6 +75,16 @@ Overlay mode with dark background:
 Using individual params:
 ```
 /api/merge?user1=torvalds&user2=gvanrossum&mode=overlay
+```
+
+Custom colors (dark background):
+```
+/api/merge?users=torvalds,gvanrossum&colors=ff6b6b,4ecdc4&bg=dark
+```
+
+Custom colors in overlay mode (light background):
+```
+/api/merge?users=torvalds,gvanrossum&mode=overlay&colors=58a6ff,f47067&bg=light
 ```
 
 ## Self-Hosting

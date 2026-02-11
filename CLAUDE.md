@@ -32,3 +32,6 @@ src/themes.ts         → Color theme definitions (github, github-dark, blue, bl
 - Max 10 users per request; usernames validated against GitHub format
 - 3-layer caching: Vercel CDN (s-maxage), in-memory SVG, in-memory per-user data — all 5-min TTL
 - `GITHUB_TOKEN` env var required for GitHub GraphQL API access
+- `colors` param: comma-separated hex codes (no `#`) for custom per-user colors, overrides `theme`
+- `bg` param: `light` or `dark` (default `dark`) — background mode when using custom colors
+- Custom colors auto-generate 4 intensity levels per color via HSL manipulation
