@@ -664,6 +664,14 @@
       padding: 1.5rem;
       text-align: center;
     }
+    .preview-warning {
+      color: #f0883e;
+      font-size: 0.78rem;
+      padding: 0.6rem 1rem;
+      background: rgba(240,136,62,0.08);
+      border-top: 1px solid rgba(240,136,62,0.15);
+      text-align: center;
+    }
 
     /* ── Footer ── */
     footer {
@@ -1156,6 +1164,7 @@
       });
     }
 
+    var _prevBlobUrl = null;
     function loadPreview() {
       const url = document.getElementById('url-display').textContent;
       const container = document.getElementById('preview-area');
@@ -1165,16 +1174,48 @@
       container.classList.add('visible');
       container.classList.remove('loaded');
       container.innerHTML = '';
-      const img = document.createElement('img');
-      img.src = url;
-      img.alt = 'Contribution graph preview';
-      img.onload = () => { container.classList.add('loaded'); btn.disabled = false; btn.textContent = 'Load Preview'; window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); };
-      img.onerror = () => {
-        container.classList.add('loaded');
-        container.innerHTML = '<div class="preview-error">Failed to load preview. Check usernames and try again.</div>';
-        btn.disabled = false; btn.textContent = 'Load Preview';
-      };
-      container.appendChild(img);
+
+      fetch(url)
+        .then(function(response) {
+          const failedHeader = response.headers.get('X-Failed-Users');
+          const failedUsers = failedHeader ? failedHeader.split(',').filter(Boolean) : [];
+          return response.blob().then(function(blob) {
+            return { blob: blob, failedUsers: failedUsers, ok: response.ok };
+          });
+        })
+        .then(function(result) {
+          if (_prevBlobUrl) { URL.revokeObjectURL(_prevBlobUrl); _prevBlobUrl = null; }
+          _prevBlobUrl = URL.createObjectURL(result.blob);
+
+          const img = document.createElement('img');
+          img.src = _prevBlobUrl;
+          img.alt = 'Contribution graph preview';
+          img.onload = function() {
+            container.classList.add('loaded');
+            btn.disabled = false;
+            btn.textContent = 'Load Preview';
+            if (result.failedUsers.length > 0) {
+              const warn = document.createElement('div');
+              warn.className = 'preview-warning';
+              warn.textContent = '\u26A0 Could not fetch: ' + result.failedUsers.join(', ');
+              container.appendChild(warn);
+            }
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+          };
+          img.onerror = function() {
+            container.classList.add('loaded');
+            container.innerHTML = '<div class="preview-error">Failed to load preview. Check usernames and try again.</div>';
+            btn.disabled = false;
+            btn.textContent = 'Load Preview';
+          };
+          container.appendChild(img);
+        })
+        .catch(function() {
+          container.classList.add('loaded');
+          container.innerHTML = '<div class="preview-error">Failed to load preview. Check usernames and try again.</div>';
+          btn.disabled = false;
+          btn.textContent = 'Load Preview';
+        });
     }
 
     function toggleInfo() {

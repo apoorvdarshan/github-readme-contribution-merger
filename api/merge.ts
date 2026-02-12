@@ -35,12 +35,16 @@ function parseUsernames(req: VercelRequest): string[] {
   return [...new Set(usernames)];
 }
 
-function respondSvg(res: VercelResponse, svg: string, status: number = 200): void {
+function respondSvg(res: VercelResponse, svg: string, status: number = 200, failedUsers?: string[]): void {
   res.setHeader('Content-Type', 'image/svg+xml');
   res.setHeader('Cache-Control', status === 200
     ? 'public, max-age=300, s-maxage=300'
     : 'no-cache'
   );
+  if (failedUsers && failedUsers.length > 0) {
+    res.setHeader('X-Failed-Users', failedUsers.join(','));
+    res.setHeader('Access-Control-Expose-Headers', 'X-Failed-Users');
+  }
   res.status(status).send(svg);
 }
 
@@ -113,9 +117,9 @@ export default async function handler(
 
   // Check SVG cache (include colors and bg in key)
   const svgCacheKey = `svg:${usernames.join(',')}:${mode}:${theme}:${customColors?.join(',') ?? ''}:${bgParam ?? ''}`;
-  const cachedSvg = cacheGet<string>(svgCacheKey);
-  if (cachedSvg) {
-    respondSvg(res, cachedSvg);
+  const cached = cacheGet<{ svg: string; failedUsers: string[] }>(svgCacheKey);
+  if (cached) {
+    respondSvg(res, cached.svg, 200, cached.failedUsers);
     return;
   }
 
@@ -130,10 +134,12 @@ export default async function handler(
 
   // Build render options
   const fulfilledUsernames = fulfilled.map((u) => u.username);
+  const failedUsernames = errors.map((e) => e.username);
   const renderOptions: import('../src/types').RenderOptions = {
     mode,
     theme,
     usernames: fulfilledUsernames,
+    failedUsers: failedUsernames.length > 0 ? failedUsernames : undefined,
   };
 
   if (customColors) {
@@ -161,6 +167,6 @@ export default async function handler(
   const merged = mergeContributions(fulfilled);
   const svg = renderSvg(merged, renderOptions);
 
-  cacheSet(svgCacheKey, svg);
-  respondSvg(res, svg);
+  cacheSet(svgCacheKey, { svg, failedUsers: failedUsernames });
+  respondSvg(res, svg, 200, failedUsernames);
 }

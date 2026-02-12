@@ -64,4 +64,5 @@ export interface RenderOptions {
   usernames: string[];
   customPalettes?: OverlayPalette[];  // per-user custom palettes (overlay)
   customTheme?: ThemeColors;          // custom theme (for bg/text/empty + sum levels)
+  failedUsers?: string[];             // usernames that failed to fetch
 }

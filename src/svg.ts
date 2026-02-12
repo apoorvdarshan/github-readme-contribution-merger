@@ -15,6 +15,7 @@ const LABEL_AREA_Y = 20;
 const PADDING = 16;
 const LEGEND_HEIGHT = 30;
 const USERS_LABEL_HEIGHT = 20;
+const WARNING_HEIGHT = 20;
 
 function escapeXml(str: string): string {
   return str
@@ -112,13 +113,15 @@ export function renderSvg(days: MergedDay[], options: RenderOptions): string {
   const gridWidth = weeks.length * CELL_STEP;
   const gridHeight = DAYS_IN_WEEK * CELL_STEP;
   const showUsersLabel = options.mode !== 'overlay' && options.usernames.length > 1;
+  const hasWarning = options.failedUsers && options.failedUsers.length > 0;
   const totalWidth = PADDING * 2 + LABEL_AREA_X + gridWidth;
   const totalHeight =
     PADDING * 2 +
     LABEL_AREA_Y +
     gridHeight +
     LEGEND_HEIGHT +
-    (showUsersLabel ? USERS_LABEL_HEIGHT : 0);
+    (showUsersLabel ? USERS_LABEL_HEIGHT : 0) +
+    (hasWarning ? WARNING_HEIGHT : 0);
 
   const cellElements: string[] = [];
 
@@ -244,6 +247,40 @@ export function renderSvg(days: MergedDay[], options: RenderOptions): string {
     }
   }
 
+  // Warning for failed users
+  const warningElements: string[] = [];
+  if (hasWarning) {
+    const warningY = PADDING + LABEL_AREA_Y + gridHeight + LEGEND_HEIGHT +
+      (showUsersLabel ? USERS_LABEL_HEIGHT : 0) + 4;
+    const isDark = theme.background !== '#ffffff' && theme.background !== '#fff';
+    const warningColor = isDark ? '#f0883e' : '#d29922';
+    const maxTextWidth = totalWidth - PADDING * 2 - LABEL_AREA_X;
+    const charWidth = 5.8;
+    const prefix = '\u26A0 Could not fetch: ';
+    const maxChars = Math.floor(maxTextWidth / charWidth);
+    let warningText = prefix + options.failedUsers!.join(', ');
+    if (warningText.length > maxChars && options.failedUsers!.length > 1) {
+      // Truncate with "+N more"
+      const names: string[] = [];
+      let current = prefix;
+      for (let i = 0; i < options.failedUsers!.length; i++) {
+        const remaining = options.failedUsers!.length - i;
+        const suffix = remaining > 1 ? ` +${remaining - 1} more` : '';
+        const candidate = current + (names.length > 0 ? ', ' : '') + options.failedUsers![i] + suffix;
+        if (candidate.length > maxChars && names.length > 0) {
+          warningText = current + ` +${remaining} more`;
+          break;
+        }
+        names.push(options.failedUsers![i]);
+        current = prefix + names.join(', ');
+        warningText = current;
+      }
+    }
+    warningElements.push(
+      `<text x="${PADDING + LABEL_AREA_X}" y="${warningY + 10}" fill="${warningColor}" font-size="10" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">${escapeXml(warningText)}</text>`
+    );
+  }
+
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${totalWidth}" height="${totalHeight}" viewBox="0 0 ${totalWidth} ${totalHeight}">
   <rect width="${totalWidth}" height="${totalHeight}" fill="${theme.background}" rx="6" ry="6"/>
   ${monthLabelElements.join('\n  ')}
@@ -251,6 +288,7 @@ export function renderSvg(days: MergedDay[], options: RenderOptions): string {
   ${cellElements.join('\n  ')}
   ${legendElements.join('\n  ')}
   ${userLabelElements.join('\n  ')}
+  ${warningElements.join('\n  ')}
 </svg>`;
 }
 
