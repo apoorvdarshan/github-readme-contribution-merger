@@ -4,13 +4,13 @@
 
 ### Combine multiple GitHub contribution graphs into one embeddable SVG heatmap
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-4ade80?style=for-the-badge&logo=vercel&logoColor=white)](https://github-contribution-merger.vercel.app)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-4ade80?style=for-the-badge&logo=vercel&logoColor=white)](https://github-contribution-merger.apoorvdarshan.com)
 [![GitHub Stars](https://img.shields.io/github/stars/apoorvdarshan/github-readme-contribution-merger?style=for-the-badge&logo=github&color=39d353)](https://github.com/apoorvdarshan/github-readme-contribution-merger/stargazers)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 
 <br>
 
-![Merged Contribution Graph](https://github-contribution-merger.vercel.app/api/merge?users=gvanrossum,apoorvdarshan&colors=39d353,58a6ff&mode=overlay)
+![Merged Contribution Graph](https://github-contribution-merger.apoorvdarshan.com/api/merge?users=gvanrossum,apoorvdarshan&colors=39d353,58a6ff&mode=overlay)
 
 *Overlay mode with custom colors*
 
@@ -41,18 +41,18 @@ A **free, open-source tool** that fetches GitHub contribution data for multiple 
 
 ### 1. Use the Interactive Builder (Recommended)
 
-Visit **[github-contribution-merger.vercel.app](https://github-contribution-merger.vercel.app)** to build your embed link visually — pick usernames, modes, colors, and preview the result before copying.
+Visit **[github-contribution-merger.apoorvdarshan.com](https://github-contribution-merger.apoorvdarshan.com)** to build your embed link visually — pick usernames, modes, colors, and preview the result before copying.
 
 ### 2. Or paste a URL directly
 
 **Markdown:**
 ```markdown
-![Contributions](https://github-contribution-merger.vercel.app/api/merge?users=YOUR_USERNAME,FRIEND_USERNAME)
+![Contributions](https://github-contribution-merger.apoorvdarshan.com/api/merge?users=YOUR_USERNAME,FRIEND_USERNAME)
 ```
 
 **HTML:**
 ```html
-<img src="https://github-contribution-merger.vercel.app/api/merge?users=YOUR_USERNAME,FRIEND_USERNAME" alt="Merged GitHub contributions" />
+<img src="https://github-contribution-merger.apoorvdarshan.com/api/merge?users=YOUR_USERNAME,FRIEND_USERNAME" alt="Merged GitHub contributions" />
 ```
 
 ---
@@ -67,12 +67,12 @@ Visit **[github-contribution-merger.vercel.app](https://github-contribution-merg
 <tr>
 <td align="center">
 
-![Sum Mode](https://github-contribution-merger.vercel.app/api/merge?users=gvanrossum,apoorvdarshan)
+![Sum Mode](https://github-contribution-merger.apoorvdarshan.com/api/merge?users=gvanrossum,apoorvdarshan)
 
 </td>
 <td align="center">
 
-![Overlay Mode](https://github-contribution-merger.vercel.app/api/merge?users=gvanrossum,apoorvdarshan&mode=overlay)
+![Overlay Mode](https://github-contribution-merger.apoorvdarshan.com/api/merge?users=gvanrossum,apoorvdarshan&mode=overlay)
 
 </td>
 </tr>
@@ -83,12 +83,12 @@ Visit **[github-contribution-merger.vercel.app](https://github-contribution-merg
 <tr>
 <td align="center">
 
-![Custom Colors](https://github-contribution-merger.vercel.app/api/merge?users=gvanrossum,apoorvdarshan&colors=ff6b6b,4ecdc4)
+![Custom Colors](https://github-contribution-merger.apoorvdarshan.com/api/merge?users=gvanrossum,apoorvdarshan&colors=ff6b6b,4ecdc4)
 
 </td>
 <td align="center">
 
-![Dark Theme](https://github-contribution-merger.vercel.app/api/merge?users=gvanrossum,apoorvdarshan&theme=github-dark)
+![Dark Theme](https://github-contribution-merger.apoorvdarshan.com/api/merge?users=gvanrossum,apoorvdarshan&theme=github-dark)
 
 </td>
 </tr>
@@ -99,12 +99,12 @@ Visit **[github-contribution-merger.vercel.app](https://github-contribution-merg
 <tr>
 <td align="center">
 
-![Purple Theme](https://github-contribution-merger.vercel.app/api/merge?users=gvanrossum,apoorvdarshan&theme=purple)
+![Purple Theme](https://github-contribution-merger.apoorvdarshan.com/api/merge?users=gvanrossum,apoorvdarshan&theme=purple)
 
 </td>
 <td align="center">
 
-![Blue Dark Theme](https://github-contribution-merger.vercel.app/api/merge?users=gvanrossum,apoorvdarshan&theme=blue-dark)
+![Blue Dark Theme](https://github-contribution-merger.apoorvdarshan.com/api/merge?users=gvanrossum,apoorvdarshan&theme=blue-dark)
 
 </td>
 </tr>
@@ -115,12 +115,12 @@ Visit **[github-contribution-merger.vercel.app](https://github-contribution-merg
 <tr>
 <td align="center">
 
-![Custom Overlay Red Teal](https://github-contribution-merger.vercel.app/api/merge?users=gvanrossum,apoorvdarshan&mode=overlay&colors=ff6b6b,4ecdc4)
+![Custom Overlay Red Teal](https://github-contribution-merger.apoorvdarshan.com/api/merge?users=gvanrossum,apoorvdarshan&mode=overlay&colors=ff6b6b,4ecdc4)
 
 </td>
 <td align="center">
 
-![Custom Overlay Orange Blue](https://github-contribution-merger.vercel.app/api/merge?users=gvanrossum,apoorvdarshan&mode=overlay&colors=f0883e,58a6ff)
+![Custom Overlay Orange Blue](https://github-contribution-merger.apoorvdarshan.com/api/merge?users=gvanrossum,apoorvdarshan&mode=overlay&colors=f0883e,58a6ff)
 
 </td>
 </tr>
