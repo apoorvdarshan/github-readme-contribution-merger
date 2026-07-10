@@ -2,7 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "github-contribution-merger",
   "main": "worker/index.ts",
-  "compatibility_date": "2026-07-11",
+  "compatibility_date": "2026-07-10",
   "compatibility_flags": ["nodejs_compat"],
   "workers_dev": false,
   "preview_urls": false,
