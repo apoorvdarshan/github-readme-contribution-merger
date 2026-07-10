@@ -11,8 +11,9 @@
     "rootDir": ".",
     "declaration": true,
     "sourceMap": true,
+    "types": ["node", "@cloudflare/workers-types"],
     "lib": ["ES2022", "DOM"]
   },
-  "include": ["src/**/*.ts", "api/**/*.ts"],
+  "include": ["src/**/*.ts", "api/**/*.ts", "worker/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }

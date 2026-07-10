@@ -1,4 +1,3 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
 import type { MergeMode } from '../src/types';
 import { fetchMultipleUsers } from '../src/github';
 import { mergeContributions } from '../src/merger';
@@ -11,7 +10,18 @@ const HEX_COLOR_REGEX = /^[0-9a-fA-F]{6}$/;
 const MAX_USERS = 10;
 const VALID_MODES: MergeMode[] = ['sum', 'overlay'];
 
-function parseUsernames(req: VercelRequest): string[] {
+export interface ApiRequest {
+  method?: string;
+  query: Record<string, string | string[] | undefined>;
+}
+
+export interface ApiResponse {
+  setHeader(name: string, value: string): void;
+  status(code: number): ApiResponse;
+  send(body: string): void;
+}
+
+function parseUsernames(req: ApiRequest): string[] {
   const usernames: string[] = [];
 
   // Check `users` param (comma-separated)
@@ -35,7 +45,7 @@ function parseUsernames(req: VercelRequest): string[] {
   return [...new Set(usernames)];
 }
 
-function respondSvg(res: VercelResponse, svg: string, status: number = 200, failedUsers?: string[]): void {
+function respondSvg(res: ApiResponse, svg: string, status: number = 200, failedUsers?: string[]): void {
   res.setHeader('Content-Type', 'image/svg+xml');
   res.setHeader('Cache-Control', status === 200
     ? 'public, max-age=300, s-maxage=300'
@@ -49,8 +59,8 @@ function respondSvg(res: VercelResponse, svg: string, status: number = 200, fail
 }
 
 export default async function handler(
-  req: VercelRequest,
-  res: VercelResponse
+  req: ApiRequest,
+  res: ApiResponse
 ): Promise<void> {
   if (req.method !== 'GET') {
     respondSvg(res, renderErrorSvg('Method not allowed. Use GET.'), 405);
