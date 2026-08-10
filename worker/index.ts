@@ -1,4 +1,5 @@
 import handler from "../api/merge";
+import { handleStarHistory } from "../src/star-history";
 
 interface Env {
   ASSETS: Fetcher;
@@ -6,8 +7,12 @@ interface Env {
 }
 
 export default {
-  async fetch(request, env): Promise<Response> {
+  async fetch(request, env, context): Promise<Response> {
     const url = new URL(request.url);
+    if (url.pathname === "/api/star-history.svg") {
+      return handleStarHistory(request, env.GITHUB_TOKEN, context);
+    }
+
     if (url.pathname !== "/api/merge") {
       return env.ASSETS.fetch(request);
     }
