@@ -228,9 +228,9 @@ If you find this useful, please give it a **star** — it helps others discover 
 
 <a href="https://github.com/apoorvdarshan/github-readme-contribution-merger/stargazers">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://github-contribution-merger.apoorvdarshan.com/api/star-history.svg?theme=dark&amp;v=1" />
-    <source media="(prefers-color-scheme: light)" srcset="https://github-contribution-merger.apoorvdarshan.com/api/star-history.svg?theme=light&amp;v=1" />
-    <img alt="GitHub Readme Contribution Merger star history" src="https://github-contribution-merger.apoorvdarshan.com/api/star-history.svg?theme=light&amp;v=1" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://github-contribution-merger.apoorvdarshan.com/api/star-history.svg?theme=dark&amp;v=2" />
+    <source media="(prefers-color-scheme: light)" srcset="https://github-contribution-merger.apoorvdarshan.com/api/star-history.svg?theme=light&amp;v=2" />
+    <img alt="GitHub Readme Contribution Merger star history" src="https://github-contribution-merger.apoorvdarshan.com/api/star-history.svg?theme=light&amp;v=2" />
   </picture>
 </a>
 

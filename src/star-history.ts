@@ -39,7 +39,7 @@ export async function handleStarHistory(
   const url = new URL(request.url);
   const themeName: ThemeName = url.searchParams.get('theme') === 'dark' ? 'dark' : 'light';
   const cacheUrl = new URL(url);
-  cacheUrl.search = `?theme=${themeName}&v=1`;
+  cacheUrl.search = `?theme=${themeName}&v=2`;
   const cacheKey = new Request(cacheUrl.toString(), { method: 'GET' });
   const cache = (caches as unknown as { default: Cache }).default;
   const cached = await cache.match(cacheKey);
@@ -105,7 +105,7 @@ function renderStarHistory(starredAtValues: string[], themeName: ThemeName): str
   const theme = themes[themeName];
   const width = 960;
   const height = 520;
-  const plot = { left: 76, top: 148, right: 904, bottom: 424 };
+  const plot = { left: 76, top: 188, right: 904, bottom: 395 };
   const now = Date.now();
   const stars = starredAtValues
     .map((value) => new Date(value).getTime())
@@ -151,37 +151,59 @@ function renderStarHistory(starredAtValues: string[], themeName: ThemeName): str
     })
     .join('');
   const currentY = y(stars.length);
+  const commits = [0.27, 0.52, 0.76]
+    .map((ratio, index) => {
+      const point = samples[Math.round((samples.length - 1) * ratio)];
+      const color = ['#39D353', '#58A6FF', '#A371F7'][index];
+      return `<g transform="translate(${point[0]} ${point[1]})" filter="url(#pixel-wobble)"><rect x="-7" y="-7" width="14" height="14" rx="3" fill="${color}" stroke="${theme.background}" stroke-width="3"/><path d="M-3 -13 V-22 H4" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="square"/><rect x="2" y="-25" width="6" height="6" rx="1" fill="${color}"/></g>`;
+    })
+    .join('');
+  const dark = themeName === 'dark';
+  const panel = dark ? '#161B22' : '#FFFFFF';
+  const ink = dark ? '#F0F6FC' : '#1F2328';
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="title description">
   <title id="title">GitHub Readme Contribution Merger star history</title>
   <desc id="description">${stars.length} GitHub stars over time for ${OWNER}/${REPOSITORY}.</desc>
   <defs>
-    <linearGradient id="growth-line" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#26A641"/><stop offset=".62" stop-color="#39D353"/><stop offset="1" stop-color="#58A6FF"/></linearGradient>
-    <linearGradient id="growth-area" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#39D353" stop-opacity=".24"/><stop offset="1" stop-color="#39D353" stop-opacity="0"/></linearGradient>
-    <pattern id="cells" width="18" height="18" patternUnits="userSpaceOnUse"><rect width="12" height="12" rx="2" fill="${theme.empty}" opacity=".45"/></pattern>
+    <linearGradient id="growth-line" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#39D353"/><stop offset=".48" stop-color="#58A6FF"/><stop offset="1" stop-color="#A371F7"/></linearGradient>
+    <linearGradient id="growth-area" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#58A6FF" stop-opacity=".25"/><stop offset="1" stop-color="#A371F7" stop-opacity=".015"/></linearGradient>
+    <pattern id="cells" width="18" height="18" patternUnits="userSpaceOnUse"><rect width="12" height="12" rx="2" fill="${theme.empty}" opacity=".48"/></pattern>
+    <pattern id="paper-grid" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M26 0H0V26" fill="none" stroke="${theme.grid}" stroke-width=".7" opacity=".35"/></pattern>
+    <filter id="pixel-wobble" x="-30%" y="-30%" width="160%" height="160%"><feTurbulence type="fractalNoise" baseFrequency=".02" numOctaves="1" seed="31" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale=".45"/></filter>
+    <filter id="commit-glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
     <clipPath id="plot"><rect x="${plot.left}" y="${plot.top - 10}" width="${plot.right - plot.left}" height="${plot.bottom - plot.top + 10}"/></clipPath>
-    <style>.axis{fill:${theme.muted};font:500 13px ui-monospace,SFMono-Regular,monospace}.grid{stroke:${theme.grid};stroke-width:1;stroke-dasharray:2 8}.title{fill:${theme.text};font:700 17px ui-monospace,SFMono-Regular,monospace}.muted{fill:${theme.muted};font:500 13px ui-sans-serif,-apple-system,sans-serif}.eyebrow{fill:${theme.muted};font:650 11px ui-monospace,SFMono-Regular,monospace;letter-spacing:1.4px}</style>
+    <style>.axis{fill:${theme.muted};font:600 12.5px ui-monospace,SFMono-Regular,monospace}.grid{stroke:${theme.grid};stroke-width:1;stroke-dasharray:3 8}.title{fill:${ink};font:800 23px ui-monospace,SFMono-Regular,monospace}.muted{fill:${theme.muted};font:500 13px ui-monospace,SFMono-Regular,monospace}.tiny{fill:${theme.muted};font:700 10.5px ui-monospace,SFMono-Regular,monospace;letter-spacing:1px}</style>
   </defs>
-  <rect x=".5" y=".5" width="959" height="519" rx="14" fill="${theme.background}" stroke="${theme.border}"/>
-  <g transform="translate(42 34)"><rect width="54" height="45" rx="8" fill="${theme.empty}" stroke="${theme.border}"/><g transform="translate(6 9)">${cells}</g></g>
-  <text x="114" y="49" class="title">contribution-merger / stars</text>
-  <text x="114" y="72" class="muted">Many graphs. One shared signal.</text>
-  <text x="${plot.right}" y="42" text-anchor="end" class="eyebrow">MERGED TOTAL</text>
-  <text x="${plot.right}" y="78" text-anchor="end" fill="${theme.text}" font-family="ui-monospace,SFMono-Regular,monospace" font-size="34" font-weight="720">${stars.length}<tspan dx="9" fill="${theme.muted}" font-size="14" font-weight="600">STARS</tspan></text>
-  <line x1="${plot.left}" y1="114" x2="${plot.right}" y2="114" stroke="${theme.border}"/>
+  <rect width="960" height="520" rx="24" fill="${theme.background}"/>
+  <rect x="16" y="16" width="928" height="488" rx="20" fill="${panel}" stroke="${theme.border}" stroke-width="1.5"/>
+  <rect x="27" y="27" width="906" height="466" rx="14" fill="url(#paper-grid)" stroke="${theme.border}" stroke-dasharray="4 7"/>
+  <g transform="translate(43 34)" filter="url(#pixel-wobble)"><rect width="48" height="45" rx="9" fill="${theme.empty}" stroke="${theme.border}"/><g transform="translate(3 9) scale(.92)">${cells}</g></g>
+  <text x="108" y="52" class="title">Two graphs walked into one README.</text>
+  <text x="109" y="77" class="muted">The stars merged too.</text>
+  <g transform="translate(748 35)" filter="url(#pixel-wobble)"><path d="M14 0 H126 Q140 0 140 14 V39 Q140 52 126 52 H14 Q0 52 0 38 V14 Q0 0 14 0Z" fill="${dark ? '#12251A' : '#EDFAF0'}" stroke="#39D353" stroke-width="1.5" stroke-dasharray="4 3"/><g transform="translate(14 13)" filter="url(#commit-glow)"><rect width="9" height="9" rx="2" fill="#39D353"/><rect x="12" y="0" width="9" height="9" rx="2" fill="#58A6FF"/><rect x="6" y="12" width="9" height="9" rx="2" fill="#A371F7"/></g><text x="48" y="34" fill="${ink}" font-family="ui-monospace,SFMono-Regular,monospace" font-size="21" font-weight="800">${stars.length}</text><text x="98" y="32" class="tiny">STARS</text></g>
+  <g transform="translate(322 103)" opacity=".9"><text x="30" y="12" text-anchor="middle" class="tiny">USER A</text><g transform="translate(0 20)">${cells}</g></g>
+  <g transform="translate(535 103)" opacity=".9"><text x="30" y="12" text-anchor="middle" class="tiny">USER B</text><g transform="translate(0 20)">${cells}</g></g>
+  <path d="M382 132 C418 132 427 145 455 154 M535 132 C501 132 493 145 468 154" fill="none" stroke="${theme.muted}" stroke-width="1.6" stroke-dasharray="3 5"/>
+  <g transform="translate(439 147)" filter="url(#pixel-wobble)"><rect width="48" height="25" rx="7" fill="${theme.empty}" stroke="#39D353"/><text x="24" y="17" text-anchor="middle" fill="#39D353" font-family="ui-monospace,SFMono-Regular,monospace" font-size="11" font-weight="800">MERGE</text></g>
   ${yGrid}${labels}
-  <g clip-path="url(#plot)"><rect x="${plot.left}" y="${plot.top}" width="${plot.right - plot.left}" height="${plot.bottom - plot.top}" fill="url(#cells)" opacity=".18"/><path d="${area}" fill="url(#growth-area)"/><path d="${path}" fill="none" stroke="url(#growth-line)" stroke-width="4" stroke-linecap="square"/></g>
-  <rect x="${plot.right - 6}" y="${currentY - 6}" width="12" height="12" rx="2.5" fill="#39D353" stroke="${theme.background}" stroke-width="3"/>
-  <line x1="${plot.left}" y1="${plot.bottom}" x2="${plot.right}" y2="${plot.bottom}" stroke="${theme.border}"/>
+  <g clip-path="url(#plot)"><rect x="${plot.left}" y="${plot.top}" width="${plot.right - plot.left}" height="${plot.bottom - plot.top}" fill="url(#cells)" opacity=".14"/><path d="${area}" fill="url(#growth-area)"/><path d="${path}" fill="none" stroke="#58A6FF" stroke-width="8" opacity=".11"/><path d="${path}" fill="none" stroke="url(#growth-line)" stroke-width="4.2" stroke-linecap="square" filter="url(#pixel-wobble)"/></g>
+  ${commits}
+  <g transform="translate(${plot.right} ${currentY})" filter="url(#pixel-wobble)"><rect x="-8" y="-8" width="16" height="16" rx="3" fill="#39D353" stroke="${panel}" stroke-width="3"/><path d="M10 -11 H18 V-3 M18 -11 L10 -3" fill="none" stroke="#58A6FF" stroke-width="2"/></g>
+  <g transform="translate(60 453)" opacity=".76"><text class="tiny" y="11">INPUTS</text><rect x="55" y="0" width="10" height="10" rx="2" fill="#39D353"/><rect x="69" y="0" width="10" height="10" rx="2" fill="#58A6FF"/><path d="M86 5 H111" stroke="${theme.muted}" stroke-width="1.6" stroke-dasharray="3 3"/><text x="121" y="10" class="tiny">ONE SVG</text></g>
+  <g transform="translate(783 451)" opacity=".72" filter="url(#pixel-wobble)"><path d="M0 14 H23 M17 8 L23 14 L17 20" fill="none" stroke="#A371F7" stroke-width="2"/><rect x="31" y="8" width="12" height="12" rx="2" fill="#39D353"/><rect x="47" y="8" width="12" height="12" rx="2" fill="#58A6FF"/><rect x="63" y="8" width="12" height="12" rx="2" fill="#A371F7"/></g>
 </svg>`;
 }
 
 function niceMaximum(value: number): number {
   if (value <= 5) return 5;
-  const exponent = 10 ** Math.floor(Math.log10(value));
-  const fraction = value / exponent;
-  return ([1, 1.25, 2, 2.5, 5, 10].find((candidate) => candidate >= fraction) ?? 10) * exponent;
+  if (value <= 10) return 10;
+  if (value <= 20) return Math.ceil(value / 5) * 5;
+  const magnitude = 10 ** Math.floor(Math.log10(value));
+  const fraction = value / magnitude;
+  const step = magnitude * (fraction <= 1.25 ? 0.25 : 0.5);
+  return Math.ceil(value / step) * step;
 }
 
 function ticks(start: number, end: number, count: number): number[] {
