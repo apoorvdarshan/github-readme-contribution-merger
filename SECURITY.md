@@ -16,7 +16,7 @@ Instead, please email or contact directly:
 
 - **Email**: [ad13dtu@gmail.com](mailto:ad13dtu@gmail.com)
 - **GitHub**: [@apoorvdarshan](https://github.com/apoorvdarshan)
-- **Twitter/X**: [@aporvv](https://x.com/aporvv)
+- **Twitter/X**: [@apoorvdarshan](https://x.com/apoorvdarshan)
 
 ### What to include
 
