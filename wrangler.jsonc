@@ -12,7 +12,7 @@
   },
   "routes": [
     {
-      "pattern": "github-contribution-merger.apoorvdarshan.com",
+      "pattern": "github-contribution-merger.aopv.dev",
       "custom_domain": true
     }
   ],
