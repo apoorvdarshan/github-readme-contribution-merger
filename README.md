@@ -4,13 +4,13 @@
 
 ### Combine multiple GitHub contribution graphs into one embeddable SVG heatmap
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-4ade80?style=for-the-badge&logo=vercel&logoColor=white)](https://github-contribution-merger.apoorvdarshan.com)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-4ade80?style=for-the-badge&logo=vercel&logoColor=white)](https://github-contribution-merger.aopv.dev)
 [![GitHub Stars](https://img.shields.io/github/stars/apoorvdarshan/github-readme-contribution-merger?style=for-the-badge&logo=github&color=39d353)](https://github.com/apoorvdarshan/github-readme-contribution-merger/stargazers)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 
 <br>
 
-![Merged Contribution Graph](https://github-contribution-merger.apoorvdarshan.com/api/merge?users=gvanrossum,apoorvdarshan&colors=39d353,58a6ff&mode=overlay)
+![Merged Contribution Graph](https://github-contribution-merger.aopv.dev/api/merge?users=gvanrossum,apoorvdarshan&colors=39d353,58a6ff&mode=overlay)
 
 *Overlay mode with custom colors*
 
@@ -41,18 +41,18 @@ A **free, open-source tool** that fetches GitHub contribution data for multiple 
 
 ### 1. Use the Interactive Builder (Recommended)
 
-Visit **[github-contribution-merger.apoorvdarshan.com](https://github-contribution-merger.apoorvdarshan.com)** to build your embed link visually — pick usernames, modes, colors, and preview the result before copying.
+Visit **[github-contribution-merger.aopv.dev](https://github-contribution-merger.aopv.dev)** to build your embed link visually — pick usernames, modes, colors, and preview the result before copying.
 
 ### 2. Or paste a URL directly
 
 **Markdown:**
 ```markdown
-![Contributions](https://github-contribution-merger.apoorvdarshan.com/api/merge?users=YOUR_USERNAME,FRIEND_USERNAME)
+![Contributions](https://github-contribution-merger.aopv.dev/api/merge?users=YOUR_USERNAME,FRIEND_USERNAME)
 ```
 
 **HTML:**
 ```html
-<img src="https://github-contribution-merger.apoorvdarshan.com/api/merge?users=YOUR_USERNAME,FRIEND_USERNAME" alt="Merged GitHub contributions" />
+<img src="https://github-contribution-merger.aopv.dev/api/merge?users=YOUR_USERNAME,FRIEND_USERNAME" alt="Merged GitHub contributions" />
 ```
 
 ---
@@ -67,12 +67,12 @@ Visit **[github-contribution-merger.apoorvdarshan.com](https://github-contributi
 <tr>
 <td align="center">
 
-![Sum Mode](https://github-contribution-merger.apoorvdarshan.com/api/merge?users=gvanrossum,apoorvdarshan)
+![Sum Mode](https://github-contribution-merger.aopv.dev/api/merge?users=gvanrossum,apoorvdarshan)
 
 </td>
 <td align="center">
 
-![Overlay Mode](https://github-contribution-merger.apoorvdarshan.com/api/merge?users=gvanrossum,apoorvdarshan&mode=overlay)
+![Overlay Mode](https://github-contribution-merger.aopv.dev/api/merge?users=gvanrossum,apoorvdarshan&mode=overlay)
 
 </td>
 </tr>
@@ -83,12 +83,12 @@ Visit **[github-contribution-merger.apoorvdarshan.com](https://github-contributi
 <tr>
 <td align="center">
 
-![Custom Colors](https://github-contribution-merger.apoorvdarshan.com/api/merge?users=gvanrossum,apoorvdarshan&colors=ff6b6b,4ecdc4)
+![Custom Colors](https://github-contribution-merger.aopv.dev/api/merge?users=gvanrossum,apoorvdarshan&colors=ff6b6b,4ecdc4)
 
 </td>
 <td align="center">
 
-![Dark Theme](https://github-contribution-merger.apoorvdarshan.com/api/merge?users=gvanrossum,apoorvdarshan&theme=github-dark)
+![Dark Theme](https://github-contribution-merger.aopv.dev/api/merge?users=gvanrossum,apoorvdarshan&theme=github-dark)
 
 </td>
 </tr>
@@ -99,12 +99,12 @@ Visit **[github-contribution-merger.apoorvdarshan.com](https://github-contributi
 <tr>
 <td align="center">
 
-![Purple Theme](https://github-contribution-merger.apoorvdarshan.com/api/merge?users=gvanrossum,apoorvdarshan&theme=purple)
+![Purple Theme](https://github-contribution-merger.aopv.dev/api/merge?users=gvanrossum,apoorvdarshan&theme=purple)
 
 </td>
 <td align="center">
 
-![Blue Dark Theme](https://github-contribution-merger.apoorvdarshan.com/api/merge?users=gvanrossum,apoorvdarshan&theme=blue-dark)
+![Blue Dark Theme](https://github-contribution-merger.aopv.dev/api/merge?users=gvanrossum,apoorvdarshan&theme=blue-dark)
 
 </td>
 </tr>
@@ -115,12 +115,12 @@ Visit **[github-contribution-merger.apoorvdarshan.com](https://github-contributi
 <tr>
 <td align="center">
 
-![Custom Overlay Red Teal](https://github-contribution-merger.apoorvdarshan.com/api/merge?users=gvanrossum,apoorvdarshan&mode=overlay&colors=ff6b6b,4ecdc4)
+![Custom Overlay Red Teal](https://github-contribution-merger.aopv.dev/api/merge?users=gvanrossum,apoorvdarshan&mode=overlay&colors=ff6b6b,4ecdc4)
 
 </td>
 <td align="center">
 
-![Custom Overlay Orange Blue](https://github-contribution-merger.apoorvdarshan.com/api/merge?users=gvanrossum,apoorvdarshan&mode=overlay&colors=f0883e,58a6ff)
+![Custom Overlay Orange Blue](https://github-contribution-merger.aopv.dev/api/merge?users=gvanrossum,apoorvdarshan&mode=overlay&colors=f0883e,58a6ff)
 
 </td>
 </tr>
@@ -228,9 +228,9 @@ If you find this useful, please give it a **star** — it helps others discover 
 
 <a href="https://github.com/apoorvdarshan/github-readme-contribution-merger/stargazers">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://github-contribution-merger.apoorvdarshan.com/api/star-history.svg?theme=dark&amp;v=3" />
-    <source media="(prefers-color-scheme: light)" srcset="https://github-contribution-merger.apoorvdarshan.com/api/star-history.svg?theme=light&amp;v=3" />
-    <img alt="GitHub Readme Contribution Merger star history" src="https://github-contribution-merger.apoorvdarshan.com/api/star-history.svg?theme=light&amp;v=3" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://github-contribution-merger.aopv.dev/api/star-history.svg?theme=dark&amp;v=3" />
+    <source media="(prefers-color-scheme: light)" srcset="https://github-contribution-merger.aopv.dev/api/star-history.svg?theme=light&amp;v=3" />
+    <img alt="GitHub Readme Contribution Merger star history" src="https://github-contribution-merger.aopv.dev/api/star-history.svg?theme=light&amp;v=3" />
   </picture>
 </a>
 
@@ -240,7 +240,7 @@ If you find this useful, please give it a **star** — it helps others discover 
 
 If this tool helped you, consider supporting its development:
 
-[![PayPal](https://img.shields.io/badge/PayPal-Support-009de0?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/apoorvdarshan)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-Support-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/apv)
 
 ---
 
@@ -249,8 +249,8 @@ If this tool helped you, consider supporting its development:
 Made by [Apoorv Darshan](https://github.com/apoorvdarshan)
 
 [![GitHub](https://img.shields.io/badge/GitHub-apoorvdarshan-181717?style=flat-square&logo=github)](https://github.com/apoorvdarshan)
-[![Twitter](https://img.shields.io/badge/Twitter-@apoorvdarshan-1da1f2?style=flat-square&logo=x)](https://x.com/apoorvdarshan)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-apoorvdarshan-0a66c2?style=flat-square&logo=linkedin)](https://linkedin.com/in/apoorvdarshan)
+[![Twitter](https://img.shields.io/badge/Twitter-@aporvv-1da1f2?style=flat-square&logo=x)](https://x.com/aporvv)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-aopv-0a66c2?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/aopv/)
 
 **MIT License**
 
