@@ -76,7 +76,7 @@ public/index.html     → Landing page (single file, no frameworks)
 
 ## Reporting Issues
 
-Open an issue on [GitHub Issues](https://github.com/aopv/github-readme-contribution-merger/issues) with:
+Open an issue on [GitHub Issues](https://github.com/apoorvdarshan/github-readme-contribution-merger/issues) with:
 - What you expected to happen
 - What actually happened
 - Steps to reproduce

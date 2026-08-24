@@ -5,7 +5,7 @@
 ### Combine multiple GitHub contribution graphs into one embeddable SVG heatmap
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-4ade80?style=for-the-badge&logo=vercel&logoColor=white)](https://github-contribution-merger.apoorvdarshan.com)
-[![GitHub Stars](https://img.shields.io/github/stars/aopv/github-readme-contribution-merger?style=for-the-badge&logo=github&color=39d353)](https://github.com/aopv/github-readme-contribution-merger/stargazers)
+[![GitHub Stars](https://img.shields.io/github/stars/apoorvdarshan/github-readme-contribution-merger?style=for-the-badge&logo=github&color=39d353)](https://github.com/apoorvdarshan/github-readme-contribution-merger/stargazers)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 
 <br>
@@ -180,7 +180,7 @@ Use the `colors` param to specify your own hex colors instead of a preset theme.
 ### Setup
 
 ```bash
-git clone https://github.com/aopv/github-readme-contribution-merger.git
+git clone https://github.com/apoorvdarshan/github-readme-contribution-merger.git
 cd github-readme-contribution-merger
 npm install
 
@@ -226,7 +226,7 @@ If you find this useful, please give it a **star** — it helps others discover 
 
 ## Star History
 
-<a href="https://github.com/aopv/github-readme-contribution-merger/stargazers">
+<a href="https://github.com/apoorvdarshan/github-readme-contribution-merger/stargazers">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://github-contribution-merger.apoorvdarshan.com/api/star-history.svg?theme=dark&amp;v=3" />
     <source media="(prefers-color-scheme: light)" srcset="https://github-contribution-merger.apoorvdarshan.com/api/star-history.svg?theme=light&amp;v=3" />
@@ -246,9 +246,9 @@ If this tool helped you, consider supporting its development:
 
 <div align="center">
 
-Made by [Apoorv Darshan](https://github.com/aopv)
+Made by [Apoorv Darshan](https://github.com/apoorvdarshan)
 
-[![GitHub](https://img.shields.io/badge/GitHub-apoorvdarshan-181717?style=flat-square&logo=github)](https://github.com/aopv)
+[![GitHub](https://img.shields.io/badge/GitHub-apoorvdarshan-181717?style=flat-square&logo=github)](https://github.com/apoorvdarshan)
 [![Twitter](https://img.shields.io/badge/Twitter-@apoorvdarshan-1da1f2?style=flat-square&logo=x)](https://x.com/apoorvdarshan)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-apoorvdarshan-0a66c2?style=flat-square&logo=linkedin)](https://linkedin.com/in/apoorvdarshan)
 
