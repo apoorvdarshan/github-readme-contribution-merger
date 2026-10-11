@@ -17,6 +17,14 @@ export default {
       return env.ASSETS.fetch(request);
     }
 
+    // Cache rendered graphs at the edge, across Worker isolate lifetimes.
+    const cache = (caches as unknown as { default: Cache }).default;
+    const cacheKey = new Request(url.toString(), { method: "GET" });
+    if (request.method === "GET") {
+      const cached = await cache.match(cacheKey);
+      if (cached) return cached;
+    }
+
     process.env.GITHUB_TOKEN = env.GITHUB_TOKEN;
 
     const query: Record<string, string | string[]> = {};
@@ -46,6 +54,10 @@ export default {
       response,
     );
 
-    return new Response(body, { status: statusCode, headers });
+    const result = new Response(body, { status: statusCode, headers });
+    if (request.method === "GET" && statusCode === 200 && !headers.has("X-Failed-Users")) {
+      context.waitUntil(cache.put(cacheKey, result.clone()));
+    }
+    return result;
   },
 } satisfies ExportedHandler<Env>;

@@ -75,10 +75,10 @@ export default async function handler(
 
   // Parse usernames
   const usernames = parseUsernames(req);
-  if (usernames.length < 2) {
+  if (usernames.length < 1) {
     respondSvg(
       res,
-      renderErrorSvg('At least 2 usernames are required.'),
+      renderErrorSvg('At least 1 username is required.'),
       400
     );
     return;
